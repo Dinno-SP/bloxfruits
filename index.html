@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Blox Fruits Super App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Warna Tema Modern */
+            --bg-color: #0f172a;
+            --panel-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #f59e0b;
+            --accent-glow: rgba(245, 158, 11, 0.4);
+            --btn-plus: #10b981;
+            --btn-minus: #ef4444;
+            --btn-move-plus: #059669;
+            --btn-move-minus: #dc2626;
+            
+            /* Warna Rarity */
+            --mythical-top: #ef4444; --mythical-mid: rgba(220, 38, 38, 0.5); --mythical-bot: #450a0a;
+            --legendary-top: #d946ef; --legendary-mid: rgba(192, 38, 211, 0.5); --legendary-bot: #4a044e;
+            --rare-top: #3b82f6; --rare-mid: rgba(37, 99, 235, 0.5); --rare-bot: #172554;
+            --uncommon-top: #06b6d4; --uncommon-mid: rgba(8, 145, 178, 0.5); --uncommon-bot: #083344;
+            --common-top: #94a3b8; --common-mid: rgba(100, 116, 139, 0.5); --common-bot: #0f172a;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0; padding: 0; 
+            overscroll-behavior-y: contain;
+            -webkit-tap-highlight-color: transparent; 
+            overflow-x: hidden;
+        }
+
+        /* =========================================
+           MAIN NAVBAR & SIDEBAR (DASHBOARD)
+           ========================================= */
+        .main-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 60px;
+            background-color: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex; align-items: center; padding: 0 15px;
+            box-sizing: border-box; z-index: 2000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .hamburger-btn {
+            background: none; border: none; color: white; font-size: 28px;
+            cursor: pointer; padding: 0; margin-right: 15px;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        .app-title {
+            margin: 0; font-size: 18px; font-weight: 800; 
+            background: linear-gradient(to right, #f59e0b, #fbbf24);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: 1px; text-transform: uppercase;
+        }
+
+        .sidebar-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+            z-index: 2999; display: none; opacity: 0; transition: 0.3s;
+        }
+        .sidebar-overlay.active { display: block; opacity: 1; }
+
+        .sidebar {
+            position: fixed; top: 0; left: -280px; width: 260px; height: 100%;
+            background-color: var(--panel-bg); border-right: 1px solid rgba(255,255,255,0.05);
+            z-index: 3000; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 10px 0 30px rgba(0,0,0,0.5); display: flex; flex-direction: column;
+        }
+        .sidebar.active { left: 0; }
+
+        .sidebar-header {
+            height: 60px; border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 20px;
+        }
+        .sidebar-header h2 { margin: 0; color: #fff; font-size: 18px; font-weight: 800;}
+        .close-sidebar { background: none; border: none; color: var(--btn-minus); font-size: 24px; cursor: pointer; font-weight: bold;}
+
+        .sidebar-menu { padding: 20px 10px; display: flex; flex-direction: column; gap: 10px; }
+        .menu-item {
+            background: none; border: none; color: var(--text-muted); text-align: left;
+            padding: 15px 20px; font-size: 15px; font-weight: 600; font-family: 'Poppins';
+            border-radius: 12px; cursor: pointer; transition: 0.2s;
+        }
+        .menu-item:hover { background-color: rgba(255,255,255,0.05); color: #fff;}
+        .menu-item.active { background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; box-shadow: 0 4px 12px var(--accent-glow);}
+
+        .main-content { padding-top: 60px; }
+
+        /* =========================================
+           GLOBAL UTILITIES (SHARED)
+           ========================================= */
+        .text-green { color: #10b981 !important; text-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
+        .text-red { color: #ef4444 !important; text-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
+        
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+        .rarity-mythical .card-header, .mythical-bg .card-header { background-color: var(--mythical-top); }
+        .rarity-mythical .card-body, .mythical-bg .card-body { background: linear-gradient(to bottom, var(--mythical-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
+        .rarity-mythical .card-footer, .mythical-bg .card-footer { background-color: var(--mythical-bot); }
+
+        .rarity-legendary .card-header, .legendary-bg .card-header { background-color: var(--legendary-top); }
+        .rarity-legendary .card-body, .legendary-bg .card-body { background: linear-gradient(to bottom, var(--legendary-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
+        .rarity-legendary .card-footer, .legendary-bg .card-footer { background-color: var(--legendary-bot); }
+
+        .rarity-rare .card-header, .rare-bg .card-header { background-color: var(--rare-top); }
+        .rarity-rare .card-body, .rare-bg .card-body { background: linear-gradient(to bottom, var(--rare-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
+        .rarity-rare .card-footer, .rare-bg .card-footer { background-color: var(--rare-bot); }
+
+        .rarity-uncommon .card-header, .uncommon-bg .card-header { background-color: var(--uncommon-top); }
+        .rarity-uncommon .card-body, .uncommon-bg .card-body { background: linear-gradient(to bottom, var(--uncommon-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
+        .rarity-uncommon .card-footer, .uncommon-bg .card-footer { background-color: var(--uncommon-bot); }
+
+        .rarity-common .card-header, .common-bg .card-header { background-color: var(--common-top); }
+        .rarity-common .card-body, .common-bg .card-body { background: linear-gradient(to bottom, var(--common-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
+        .rarity-common .card-footer, .common-bg .card-footer { background-color: var(--common-bot); }
+
+
+        /* =========================================
+           GAYA KHUSUS: INVENTORY STOCK
+           ========================================= */
+        #view-stock { padding-bottom: 40px; }
+        .stock-header {
+            background-color: rgba(15, 23, 42, 0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 10px; text-align: center; position: sticky; top: 60px; z-index: 999;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stock-tabs { display: flex; overflow-x: auto; gap: 8px; padding-bottom: 10px; }
+        .stock-tabs::-webkit-scrollbar { display: none; }
+        .tab-btn {
+            background-color: var(--panel-bg); color: var(--text-muted); border: 1px solid rgba(255,255,255,0.05);
+            padding: 8px 16px; border-radius: 20px; font-weight: 600; font-size: 12px; cursor: pointer; white-space: nowrap; flex: 1; transition: 0.3s;
+        }
+        .tab-btn.active { background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; border-color: transparent; transform: translateY(-2px); }
+
+        .category-tabs { display: flex; justify-content: center; gap: 15px; padding: 10px 0 5px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+        .cat-btn { background: none; border: none; color: var(--text-muted); font-size: 12px; font-weight: 800; cursor: pointer; padding: 5px 10px; border-bottom: 3px solid transparent; text-transform: uppercase; transition: 0.2s; }
+        .cat-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+        .cat-btn:hover:not(.active) { color: #fff; }
+
+        .stock-container { padding: 15px 12px; max-width: 800px; margin: 0 auto; }
+
+        .account-header {
+            background-color: var(--panel-bg); padding: 12px 16px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;
+            border: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden;
+        }
+        .account-header::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(to bottom, #f59e0b, #ea580c); }
+        .account-title h2 { margin: 0; font-size: 16px; font-weight: 800; color: #fff;}
+        .account-title p { margin: 2px 0 0 0; color: var(--text-muted); font-size: 11px; font-weight: 600;}
+
+        .slot-tracker { display: flex; align-items: center; gap: 8px; background-color: rgba(0,0,0,0.3); padding: 6px 10px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .slot-count { font-size: 13px; font-weight: 800; width: 28px; text-align: center; color: #fff;}
+        .btn-slot { width: 26px; height: 26px; border-radius: 50%; border: none; color: white; font-size: 16px; font-weight: 800; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.1s; }
+        .btn-slot:active { transform: scale(0.85); }
+        .btn-slot-minus { background-color: var(--btn-minus); }
+        .btn-slot-plus { background-color: var(--btn-plus); }
+
+        .section-title { font-size: 14px; font-weight: 800; color: #fff; margin: 20px 0 10px 0; padding-bottom: 8px; border-bottom: 2px solid rgba(255,255,255,0.1); text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
+        .section-selected .section-title { color: var(--accent); border-color: rgba(245, 158, 11, 0.3); }
+        .count-badge { font-size: 11px; font-weight: 800; background-color: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 12px; color: var(--text-muted); }
+        .section-selected .count-badge { background-color: rgba(245, 158, 11, 0.2); color: var(--accent); }
+
+        .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); gap: 10px; }
+
+        .item-card { display: flex; flex-direction: column; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); background-color: var(--panel-bg); box-shadow: 0 6px 12px rgba(0,0,0,0.4); position: relative; transition: 0.2s; }
+        .item-card:hover { transform: translateY(-3px); }
+
+        .btn-move { position: absolute; top: -8px; right: -8px; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--bg-color); z-index: 10; display: flex; justify-content: center; align-items: center; cursor: pointer; color: white; font-weight: 800; font-size: 16px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); transition: 0.15s; }
+        .btn-move:active { transform: scale(0.8); }
+        .section-selected .btn-move { background-color: var(--btn-move-minus); }
+        .section-unselected .btn-move { background-color: var(--btn-move-plus); }
+
+        .item-card .card-header { color: white; font-size: 9px; font-weight: 800; text-align: center; padding: 5px 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); border-bottom: 1px solid rgba(0,0,0,0.3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 15px; border-radius: 10px 10px 0 0; }
+        .item-card .card-body { position: relative; background-size: cover; background-position: center; padding: 8px; display: flex; justify-content: center; align-items: center; aspect-ratio: 1 / 1; }
+        .item-card .fruit-img { max-width: 95%; max-height: 95%; object-fit: contain; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.8)); transition: 0.2s;}
+        .item-card .card-footer { display: flex; justify-content: space-between; align-items: center; padding: 6px; border-top: 1px solid rgba(0,0,0,0.5); border-radius: 0 0 10px 10px; }
+
+        .btn-stock { width: 24px; height: 24px; border-radius: 6px; border: none; color: white; font-size: 16px; font-weight: 800; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.3); transition: 0.1s; }
+        .btn-stock:active { transform: scale(0.85); }
+        .btn-stock.btn-minus { background-color: var(--btn-minus); }
+        .btn-stock.btn-plus { background-color: var(--btn-plus); }
+        .stock-count { font-size: 14px; font-weight: 800; width: 22px; text-align: center; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.8);}
+
+        #view-stock .reset-btn { display: block; width: 100%; padding: 14px; margin-top: 40px; background-color: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; font-size: 13px; font-weight: 800; cursor: pointer; transition: 0.2s; font-family: 'Poppins'; }
+        #view-stock .reset-btn:active { background-color: #ef4444; color: white; transform: scale(0.98); }
+
+        @keyframes fadeSlide { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
+        .animate-content { animation: fadeSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
+
+        /* =========================================
+           GAYA KHUSUS: CALCULATOR
+           ========================================= */
+        #view-calculator { display: flex; justify-content: center; align-items: center; padding: 20px 0;}
+        .calculator-container { width: 950px; max-width: 100%; padding: 0 20px; box-sizing: border-box; }
+        
+        .main-layout { display: flex; justify-content: center; align-items: flex-start; gap: 3%; width: 100%; }
+        #side-you { order: 1; }
+        .center-area { order: 2; }
+        #side-them { order: 3; }
+
+        .side { width: 32%; text-align: center; background-color: var(--panel-bg); padding: 15px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05); box-sizing: border-box; }
+        .side h2 { margin: 0 0 15px 0; font-size: 20px; color: #fff; font-weight: 800; text-transform: uppercase; border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
+        #side-you h2 { border-color: #3b82f6; color: #60a5fa; }
+        #side-them h2 { border-color: #ef4444; color: #f87171; }
+
+        .calc-slot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        .slot { width: 100%; height: 140px; border-radius: 10px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; position: relative; overflow: hidden; transition: 0.2s; box-sizing: border-box; }
+        .slot-empty { background-color: rgba(255,255,255,0.02); border: 2px dashed rgba(255,255,255,0.15); cursor: pointer; justify-content: center; }
+        .slot-empty:hover { border-color: var(--accent); background-color: rgba(245, 158, 11, 0.1); transform: translateY(-2px); }
+        .slot-plus { font-size: 40px; color: rgba(255,255,255,0.2); font-weight: 600; }
+
+        .slot-filled { cursor: pointer; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+        .slot-filled:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.6); border-color: #ef4444; }
+        
+        .slot .card-header { flex-shrink: 0; color: white; font-size: 11px; font-weight: 800; text-align: center; padding: 4px 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); border-bottom: 1px solid rgba(0,0,0,0.3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; letter-spacing: 0.5px; box-sizing: border-box; }
+        .slot .card-body { position: relative; flex: 1; width: 100%; min-height: 0; display: flex; justify-content: center; align-items: center; padding: 5px; box-sizing: border-box; }
+        .slot .fruit-img { max-width: 90%; max-height: 90%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.8)); transition: 0.2s; }
+        .slot .card-footer { flex-shrink: 0; width: 100%; text-align: center; padding: 4px; border-top: 1px solid rgba(0,0,0,0.5); font-size: 12px; font-weight: 800; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); box-sizing: border-box; }
+
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.7); } 80% { transform: scale(1.05); } 100% { opacity: 1; transform: scale(1); } }
+        .animate-pop-in { animation: popIn 0.12s ease-out forwards; }
+        @keyframes popOut { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.6); } }
+        .animate-pop-out { animation: popOut 0.08s ease-in forwards; pointer-events: none; }
+
+        .center-area { width: 30%; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 20px; box-sizing: border-box; }
+        #view-calculator .reset-btn { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 10px 20px; font-weight: 800; font-size: 13px; cursor: pointer; margin-bottom: 30px; transition: 0.2s; text-transform: uppercase; display: flex; align-items: center; gap: 8px; justify-content: center; font-family: 'Poppins';}
+        #view-calculator .reset-btn:active { transform: scale(0.95); }
+        
+        .diff-label { color: var(--text-muted); font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;}
+        .diff-percent { font-size: 70px; font-weight: 900; margin: -5px 0 0px 0; text-shadow: 0 4px 15px rgba(0,0,0,0.4); line-height: 1.1; }
+        .status-text { font-size: 16px; font-weight: 800; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px;}
+        .missing-info { background-color: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; padding: 12px; border-radius: 10px; font-size: 13px; font-weight: 600; margin-top: 15px; display: none; width: 100%; box-sizing: border-box; }
+        .missing-info span { color: #fff; font-size: 18px; font-weight: 900; display: block; margin-top: 4px;} 
+
+        .totals-box { margin-top: 15px; width: 100%;}
+        .total-row { background-color: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); padding: 10px 15px; border-radius: 8px; color: #fff; font-size: 14px; font-weight: 800; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); display: flex; justify-content: space-between; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 4000; opacity: 0; transition: 0.15s; }
+        .modal-overlay.show { opacity: 1; } 
+        .modal-content { background-color: var(--panel-bg); width: 90%; max-width: 850px; height: 85%; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; transform: scale(0.95); transition: 0.15s; }
+        .modal-overlay.show .modal-content { transform: scale(1); } 
+        .modal-header { padding: 18px 24px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; background-color: rgba(0,0,0,0.2); border-radius: 16px 16px 0 0; }
+        .modal-header h3 { margin: 0; color: var(--accent); font-size: 16px; font-weight: 800; text-transform: uppercase;}
+        .modal-close { cursor: pointer; background: rgba(239, 68, 68, 0.2); color: #ef4444; border: none; width: 32px; height: 32px; border-radius: 50%; font-weight: bold; font-size: 16px; display: flex; justify-content: center; align-items: center; transition: 0.2s; }
+        .modal-body { padding: 15px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; align-items: start; }
+
+
+        /* =========================================
+           RESPONSIF MOBILE (KUNCI LAYAR KALKULATOR)
+           ========================================= */
+        @media screen and (max-width: 768px) {
+            body.calc-mode { overflow: hidden; height: 100vh; position: fixed; width: 100%; }
+            
+            #view-calculator { 
+                height: calc(100vh - 60px); 
+                display: flex; 
+                flex-direction: column; 
+                padding: 10px 5px; 
+                box-sizing: border-box;
+                align-items: center;
+                justify-content: flex-start;
+            }
+            
+            .calculator-container { 
+                padding: 0; 
+                height: 100%; 
+                width: 100%;
+                display: flex; 
+                flex-direction: column; 
+            }
+            
+            .main-layout { 
+                display: grid; 
+                grid-template-columns: 1fr 1fr; 
+                grid-template-rows: auto auto; 
+                gap: 10px 8px; 
+                width: 100%; 
+                height: 100%;
+            }
+            
+            #side-you { grid-column: 1; grid-row: 1; width: 100%; order: unset; }
+            #side-them { grid-column: 2; grid-row: 1; width: 100%; order: unset; }
+            .center-area { 
+                grid-column: 1 / 3; 
+                grid-row: 2; 
+                width: 100%; 
+                margin-top: 0; 
+                order: unset; 
+                justify-content: flex-start;
+                padding-top: 0;
+            }
+            
+            .side { padding: 8px; border-radius: 12px; } 
+            .side h2 { font-size: 13px; margin: 0 0 6px 0; padding-bottom: 4px; }
+            
+            .calc-slot-grid { gap: 6px; }
+            .calc-slot-grid .slot { height: 75px; border-radius: 8px;} 
+            .slot-plus { font-size: 24px; }
+            
+            .slot .card-header { font-size: 8px; padding: 2px 0; border-radius: 8px 8px 0 0;}
+            .slot .card-footer { font-size: 9px; padding: 2px; border-radius: 0 0 8px 8px;}
+            .slot .card-body { padding: 4px; }
+            .slot .fruit-img { max-width: 85%; max-height: 85%; }
+            
+            .totals-box { margin-top: 8px; }
+            .total-row { font-size: 10px; padding: 6px; flex-direction: column; text-align: center; gap: 2px;}
+            
+            #view-calculator .reset-btn { padding: 8px 0; width: 140px; font-size: 12px; margin: 5px auto 10px auto; }
+            
+            .diff-label { font-size: 12px; margin-bottom: -2px; } 
+            .diff-percent { font-size: 55px; margin-top: 0;} 
+            .status-text { font-size: 13px; margin-top: 0; }
+            .missing-info { padding: 6px; font-size: 11px; margin-top: 6px; width: 90%; border-radius: 8px; margin-left: auto; margin-right: auto;}
+            .missing-info span { font-size: 14px; margin-top: 1px;}
+            
+            .modal-content { height: 90vh; width: 95vw; border-radius: 12px;}
+            .modal-header { padding: 10px 14px; border-radius: 12px 12px 0 0;}
+            .modal-header h3 { font-size: 13px; }
+            .modal-body { grid-template-columns: repeat(auto-fill, minmax(65px, 1fr)); gap: 6px; padding: 8px; }
+            .modal-body .slot { height: 95px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="main-navbar">
+        <button class="hamburger-btn" onclick="toggleSidebar(true)">☰</button>
+        <h1 class="app-title" id="app-title">Stock Pro</h1>
+    </nav>
+
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar(false)"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Dashboard</h2>
+            <button class="close-sidebar" onclick="toggleSidebar(false)">✖</button>
+        </div>
+        <div class="sidebar-menu">
+            <button class="menu-item active" id="menu-stock" onclick="switchView('stock')">📦 Inventory Stock</button>
+            <button class="menu-item" id="menu-calc" onclick="switchView('calc')">🧮 Trade Calculator</button>
+        </div>
+    </aside>
+
+    <main class="main-content" id="main-content">
+        
+        <div id="view-stock">
+            <div class="stock-header">
+                <div class="stock-tabs" id="tab-container"></div>
+                <div class="category-tabs" id="category-tab-container">
+                    <button class="cat-btn active" onclick="changeCategory('fruits')">Fruits</button>
+                    <button class="cat-btn" onclick="changeCategory('skins')">Skins</button>
+                    <button class="cat-btn" onclick="changeCategory('gamepasses')">Gamepasses</button>
+                </div>
+            </div>
+
+            <div class="stock-container" id="content-area">
+                <div class="account-header" id="account-header"></div>
+                
+                <div class="section-selected">
+                    <div class="section-title">
+                        <span>✨ Item Pilihan</span>
+                        <span class="count-badge" id="selected-count">0</span>
+                    </div>
+                    <div class="item-grid" id="selected-grid"></div>
+                </div>
+
+                <div class="section-unselected">
+                    <div class="section-title">
+                        <span>📦 Item Lainnya</span>
+                        <span class="count-badge" id="unselected-count">0</span>
+                    </div>
+                    <div class="item-grid" id="unselected-grid"></div>
+                </div>
+                
+                <button class="reset-btn" id="reset-btn" onclick="resetCurrentAccount()">⚠️ Reset Kategori Ini</button>
+            </div>
+        </div>
+
+        <div id="view-calculator" style="display: none;">
+            <div class="calculator-container">
+                <div class="main-layout">
+                    <div class="side" id="side-you">
+                        <h2>You</h2>
+                        <div class="calc-slot-grid" id="you-grid"></div>
+                        <div class="totals-box">
+                            <div class="total-row" id="you-total-price"></div>
+                        </div>
+                    </div>
+
+                    <div class="center-area">
+                        <button class="reset-btn" onclick="resetAllCalc()"><span>🔄</span> Reset All</button>
+                        <div class="diff-label">Price Difference</div>
+                        <div class="diff-percent" id="ui-percent">0%</div>
+                        <div class="status-text text-green" id="ui-status"></div>
+                        <div class="missing-info" id="ui-missing-info"></div>
+                    </div>
+
+                    <div class="side" id="side-them">
+                        <h2>Them</h2>
+                        <div class="calc-slot-grid" id="them-grid"></div>
+                        <div class="totals-box">
+                            <div class="total-row" id="them-total-price"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <div class="modal-overlay" id="modal" onclick="closeModalOnOutsideClick(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Pilih Buah (Max 4)</h3>
+                <button class="modal-close" onclick="closeModal()">✖</button>
+            </div>
+            <div class="modal-body" id="fruit-list-modal"></div>
+        </div>
+    </div>
+
+    <script>
+        // =========================================
+        // LOGIKA DASHBOARD (NAVIGASI)
+        // =========================================
+        function toggleSidebar(forceOpen) {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (forceOpen === true) {
+                sidebar.classList.add('active'); overlay.classList.add('active');
+            } else if (forceOpen === false) {
+                sidebar.classList.remove('active'); overlay.classList.remove('active');
+            } else {
+                sidebar.classList.toggle('active'); overlay.classList.toggle('active');
+            }
+        }
+
+        function switchView(viewName) {
+            const stockView = document.getElementById('view-stock');
+            const calcView = document.getElementById('view-calculator');
+            const menuStock = document.getElementById('menu-stock');
+            const menuCalc = document.getElementById('menu-calc');
+            const title = document.getElementById('app-title');
+
+            // REVISI BUG: Menyimpan halaman yang sedang aktif agar tidak reset saat direfresh
+            localStorage.setItem('bloxAppView', viewName);
+
+            if(viewName === 'stock') {
+                stockView.style.display = 'block';
+                calcView.style.display = 'none';
+                document.body.classList.remove('calc-mode');
+                menuStock.classList.add('active'); menuCalc.classList.remove('active');
+                title.innerText = "Stock Pro";
+                
+                renderContent(true);
+            } else {
+                stockView.style.display = 'none';
+                calcView.style.display = 'flex';
+                document.body.classList.add('calc-mode');
+                menuStock.classList.remove('active'); menuCalc.classList.add('active');
+                title.innerText = "Calculator Pro";
+            }
+            toggleSidebar(false);
+            window.scrollTo(0, 0);
+        }
+
+        // =========================================
+        // LOGIKA STOCK INVENTORY
+        // =========================================
+        const orderedFruits = [
+            {name: "East Dragon", rarity: "mythical"}, {name: "West Dragon", rarity: "mythical"}, {name: "Control", rarity: "mythical"}, {name: "Kitsune", rarity: "mythical"}, {name: "Tiger", rarity: "mythical"}, {name: "Yeti", rarity: "mythical"}, {name: "Spirit", rarity: "mythical"}, {name: "Gas", rarity: "mythical"}, {name: "Venom", rarity: "mythical"}, {name: "Shadow", rarity: "mythical"}, {name: "Dough", rarity: "mythical"}, {name: "T-Rex", rarity: "mythical"}, {name: "Mammoth", rarity: "mythical"}, {name: "Gravity", rarity: "mythical"},
+            {name: "Blizzard", rarity: "legendary"}, {name: "Pain", rarity: "legendary"}, {name: "Lightning", rarity: "legendary"}, {name: "Portal", rarity: "legendary"}, {name: "Phoenix", rarity: "legendary"}, {name: "Sound", rarity: "legendary"}, {name: "Spider", rarity: "legendary"}, {name: "Creation", rarity: "legendary"}, {name: "Love", rarity: "legendary"}, {name: "Buddha", rarity: "legendary"}, {name: "Quake", rarity: "legendary"},
+            {name: "Magma", rarity: "rare"}, {name: "Ghost", rarity: "rare"}, {name: "Rubber", rarity: "rare"}, {name: "Light", rarity: "rare"},
+            {name: "Diamond", rarity: "uncommon"}, {name: "Eagle", rarity: "uncommon"}, {name: "Dark", rarity: "uncommon"}, {name: "Sand", rarity: "uncommon"}, {name: "Ice", rarity: "uncommon"}, {name: "Flame", rarity: "uncommon"},
+            {name: "Spike", rarity: "common"}, {name: "Smoke", rarity: "common"}, {name: "Bomb", rarity: "common"}, {name: "Spring", rarity: "common"}, {name: "Blade", rarity: "common"}, {name: "Spin", rarity: "common"}, {name: "Rocket", rarity: "common"}
+        ];
+
+        const orderedSkins = [
+            {name: "Galaxy Empyrean Kitsune", rarity: "mythical"}, {name: "Ember West Dragon", rarity: "mythical"}, {name: "Crimson Kitsune", rarity: "mythical"},
+            {name: "Purple Lightning", rarity: "legendary"}, {name: "Yellow Lightning", rarity: "legendary"}, {name: "Red Lightning", rarity: "legendary"},
+            {name: "Super Spirit Pain", rarity: "legendary"}, {name: "Divine Portal", rarity: "legendary"}, {name: "Werewolf", rarity: "legendary"},
+            {name: "Fiend Yeti", rarity: "mythical"}, {name: "Sadness Pain", rarity: "legendary"},
+            {name: "Azura Bomb", rarity: "common"}, {name: "Thermite Bomb", rarity: "common"}, {name: "Nuclear Bomb", rarity: "common"},
+            {name: "Celestial Pain", rarity: "legendary"}, {name: "Frustration Pain", rarity: "legendary"},
+            {name: "Eagle Matrix", rarity: "uncommon"}, {name: "Rose Quartz Diamond", rarity: "uncommon"}, {name: "Emerald Diamond", rarity: "uncommon"}, {name: "Topaz Diamond", rarity: "uncommon"}, {name: "Eagle Requiem", rarity: "uncommon"}, {name: "Ruby Diamond", rarity: "uncommon"}, {name: "Eagle Glacier", rarity: "uncommon"},
+            {name: "Eclipse", rarity: "legendary"}, {name: "Permanent Dragon Token", rarity: "mythical"}, {name: "Dragon Token", rarity: "mythical"}, {name: "Parrot", rarity: "legendary"}
+        ];
+
+        const orderedGamepasses = [
+            {name: "Fruit Notifier", rarity: "mythical"}, {name: "Mythical Scrolls", rarity: "mythical"}, {name: "Dark Blade", rarity: "mythical"},
+            {name: "Legendary Scrolls", rarity: "legendary"}, {name: "2x Mastery", rarity: "legendary"}, {name: "2x Money", rarity: "legendary"}, 
+            {name: "+1 Fruit Storage", rarity: "legendary"}, {name: "2x Boss Drops", rarity: "legendary"}, {name: "Fast Boats", rarity: "legendary"}
+        ];
+
+        const masterDict = [...orderedFruits, ...orderedSkins, ...orderedGamepasses];
+
+        const generateList = (sourceArray) => sourceArray.map(f => ({ name: f.name, count: 0, selected: true }));
+
+        const defaultData = {
+            "Royal_D": { info: "Storage 16", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) },
+            "Clone_2": { info: "Storage 8", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) },
+            "Clone_3": { info: "Storage 8", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) },
+            "Clone_4": { info: "Storage 4", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) }
+        };
+
+        let currentAccount = localStorage.getItem('bloxCurrentTab_v8') || "Royal_D";
+        let currentCategory = localStorage.getItem('bloxCurrentCat_v8') || "fruits";
+
+        function initData() {
+            const savedData = localStorage.getItem('bloxStockData_v8'); 
+            if (savedData) return JSON.parse(savedData);
+            saveData(defaultData); return JSON.parse(JSON.stringify(defaultData));
+        }
+
+        function saveData(data) { localStorage.setItem('bloxStockData_v8', JSON.stringify(data)); }
+
+        function renderTabs() {
+            let appData = initData();
+            const tabContainer = document.getElementById('tab-container');
+            const currentTabScroll = tabContainer.scrollLeft; 
+            tabContainer.innerHTML = '';
+            
+            Object.keys(appData).forEach(accName => {
+                const btn = document.createElement('button');
+                btn.className = `tab-btn ${accName === currentAccount ? 'active' : ''}`;
+                btn.innerText = accName.replace('_', ' ');
+                btn.onclick = () => {
+                    currentAccount = accName; localStorage.setItem('bloxCurrentTab_v8', currentAccount);
+                    renderTabs(); renderContent(true); 
+                };
+                tabContainer.appendChild(btn);
+            });
+            tabContainer.scrollLeft = currentTabScroll;
+            
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText.toLowerCase() === currentCategory) btn.classList.add('active');
+            });
+        }
+
+        function changeCategory(cat) { currentCategory = cat; localStorage.setItem('bloxCurrentCat_v8', currentCategory); renderTabs(); renderContent(true); }
+
+        function getRarityClass(itemName) {
+            const item = masterDict.find(f => f.name === itemName);
+            return item ? `rarity-${item.rarity}` : 'rarity-common';
+        }
+
+        function renderContent(triggerAnimation = false) {
+            const currentWindowScroll = window.scrollY;
+            let appData = initData(); const acc = appData[currentAccount];
+
+            if (triggerAnimation) {
+                const contentArea = document.getElementById('content-area');
+                if(contentArea) {
+                    contentArea.classList.remove('animate-content'); 
+                    void contentArea.offsetWidth; 
+                    contentArea.classList.add('animate-content');
+                }
+            }
+
+            document.getElementById('account-header').innerHTML = `
+                <div class="account-title">
+                    <h2>${currentAccount.replace('_', ' ')} <span style="font-size:12px; color:var(--accent);">(${currentCategory.toUpperCase()})</span></h2>
+                    <p>${acc.info}</p>
+                </div>
+                <div class="slot-tracker">
+                    <button class="btn-slot btn-slot-minus" onclick="updateSlotCount(-1)">-</button>
+                    <div class="slot-count">${acc.slotCount}/5</div>
+                    <button class="btn-slot btn-slot-plus" onclick="updateSlotCount(1)">+</button>
+                </div>
+            `;
+
+            const selectedGrid = document.getElementById('selected-grid'); const unselectedGrid = document.getElementById('unselected-grid');
+            selectedGrid.innerHTML = ''; unselectedGrid.innerHTML = '';
+            let selectedCount = 0; let unselectedCount = 0;
+
+            acc[currentCategory].forEach((itemData, index) => {
+                const imgName = itemData.name.replace(/\s+/g, '');
+                const card = document.createElement('div');
+                card.className = `item-card ${getRarityClass(itemData.name)}`;
+                
+                const cardInner = `
+                    <div class="card-header" title="${itemData.name}">${itemData.name}</div>
+                    <div class="card-body"><img src="assets/${imgName}.png" alt="${itemData.name}" loading="lazy" class="fruit-img"></div>
+                    <div class="card-footer">
+                        <button class="btn-stock btn-minus" onclick="updateStock(${index}, -1)">-</button>
+                        <div class="stock-count">${itemData.count}</div>
+                        <button class="btn-stock btn-plus" onclick="updateStock(${index}, 1)">+</button>
+                    </div>
+                `;
+
+                if (itemData.selected) {
+                    selectedCount++;
+                    card.innerHTML = `<button class="btn-move btn-remove-move" onclick="toggleSelection(${index})">－</button>` + cardInner;
+                    selectedGrid.appendChild(card);
+                } else {
+                    unselectedCount++;
+                    card.innerHTML = `<button class="btn-move btn-add-move" onclick="toggleSelection(${index})">＋</button>` + cardInner;
+                    unselectedGrid.appendChild(card);
+                }
+            });
+
+            document.getElementById('selected-count').innerText = selectedCount; document.getElementById('unselected-count').innerText = unselectedCount;
+            document.getElementById('reset-btn').innerText = `⚠️ Reset ${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)} di Akun Ini`;
+
+            if (triggerAnimation) {
+                window.scrollTo(0, 0);
+            } else {
+                window.scrollTo(0, currentWindowScroll);
+            }
+        }
+
+        function toggleSelection(itemIndex) {
+            let appData = initData(); appData[currentAccount][currentCategory][itemIndex].selected = !appData[currentAccount][currentCategory][itemIndex].selected;
+            saveData(appData); renderContent(false); 
+        }
+
+        function updateSlotCount(amount) {
+            let appData = initData(); let count = appData[currentAccount].slotCount + amount;
+            if (count < 0) count = 0; if (count > 5) count = 5;
+            appData[currentAccount].slotCount = count; saveData(appData); renderContent(false);
+        }
+
+        function updateStock(itemIndex, amount) {
+            let appData = initData(); let count = appData[currentAccount][currentCategory][itemIndex].count + amount;
+            if (count < 0) count = 0; appData[currentAccount][currentCategory][itemIndex].count = count;
+            saveData(appData); renderContent(false);
+        }
+
+        function resetCurrentAccount() {
+            const displayAccName = currentAccount.replace('_', ' ');
+            const catDisplay = currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1);
+            if(confirm(`Yakin ingin mereset data [ ${catDisplay} ] khusus untuk akun [ ${displayAccName} ] menjadi 0?\nSemua item di kategori ini akan kembali ke Tabel Pilihan.`)) {
+                let appData = initData();
+                if(currentCategory === 'fruits') appData[currentAccount].fruits = generateList(orderedFruits);
+                if(currentCategory === 'skins') appData[currentAccount].skins = generateList(orderedSkins);
+                if(currentCategory === 'gamepasses') appData[currentAccount].gamepasses = generateList(orderedGamepasses);
+                saveData(appData); renderContent(true);
+            }
+        }
+
+
+        // =========================================
+        // LOGIKA CALCULATOR
+        // =========================================
+        const calcFruitData = [
+            // REVISI BUG: Menghapus East/West, dikembalikan jadi 1 Dragon saja di Calculator
+            { id: 'dragon', name: "Dragon", price: 15000000, img: "assets/Dragon.png", rarity: 'Mythical' },
+            { id: 'control', name: "Control", price: 9000000, img: "assets/Control.png", rarity: 'Mythical' },
+            { id: 'kitsune', name: "Kitsune", price: 8000000, img: "assets/Kitsune.png", rarity: 'Mythical' },
+            { id: 'tiger', name: "Tiger", price: 5000000, img: "assets/Tiger.png", rarity: 'Mythical' }, 
+            { id: 'yeti', name: "Yeti", price: 5000000, img: "assets/Yeti.png", rarity: 'Mythical' }, 
+            { id: 'spirit', name: "Spirit", price: 3400000, img: "assets/Spirit.png", rarity: 'Mythical' }, 
+            { id: 'gas', name: "Gas", price: 3200000, img: "assets/Gas.png", rarity: 'Mythical' }, 
+            { id: 'venom', name: "Venom", price: 3000000, img: "assets/Venom.png", rarity: 'Mythical' },
+            { id: 'shadow', name: "Shadow", price: 2900000, img: "assets/Shadow.png", rarity: 'Mythical' },
+            { id: 'dough', name: "Dough", price: 2800000, img: "assets/Dough.png", rarity: 'Mythical' },
+            { id: 'trex', name: "T-Rex", price: 2700000, img: "assets/T-Rex.png", rarity: 'Mythical' }, 
+            { id: 'mammoth', name: "Mammoth", price: 2700000, img: "assets/Mammoth.png", rarity: 'Mythical' }, 
+            { id: 'gravity', name: "Gravity", price: 2500000, img: "assets/Gravity.png", rarity: 'Mythical' },
+
+            { id: 'blizzard', name: "Blizzard", price: 2400000, img: "assets/Blizzard.png", rarity: 'Legendary' },
+            { id: 'pain', name: "Pain", price: 2300000, img: "assets/Pain.png", rarity: 'Legendary' }, 
+            { id: 'rumble', name: "Rumble", price: 2100000, img: "assets/Rumble.png", rarity: 'Legendary' },
+            { id: 'portal', name: "Portal", price: 1900000, img: "assets/Portal.png", rarity: 'Legendary' }, 
+            { id: 'phoenix', name: "Phoenix", price: 1800000, img: "assets/Phoenix.png", rarity: 'Legendary' },
+            { id: 'sound', name: "Sound", price: 1700000, img: "assets/Sound.png", rarity: 'Legendary' }, 
+            { id: 'spider', name: "Spider", price: 1500000, img: "assets/Spider.png", rarity: 'Legendary' }, 
+            { id: 'creation', name: "Creation", price: 1400000, img: "assets/Creation.png", rarity: 'Legendary' }, 
+            { id: 'love', name: "Love", price: 1300000, img: "assets/Love.png", rarity: 'Legendary' },
+            { id: 'buddha', name: "Buddha", price: 1200000, img: "assets/Buddha.png", rarity: 'Legendary' },
+            { id: 'quake', name: "Quake", price: 1000000, img: "assets/Quake.png", rarity: 'Legendary' },
+
+            { id: 'magma', name: "Magma", price: 960000, img: "assets/Magma.png", rarity: 'Rare' },
+            { id: 'ghost', name: "Ghost", price: 940000, img: "assets/Ghost.png", rarity: 'Rare' }, 
+            { id: 'rubber', name: "Rubber", price: 750000, img: "assets/Rubber.png", rarity: 'Rare' },
+            { id: 'light', name: "Light", price: 650000, img: "assets/Light.png", rarity: 'Rare' },
+
+            { id: 'diamond', name: "Diamond", price: 600000, img: "assets/Diamond.png", rarity: 'Uncommon' },
+            { id: 'eagle', name: "Eagle", price: 550000, img: "assets/Eagle.png", rarity: 'Uncommon' }, 
+            { id: 'dark', name: "Dark", price: 500000, img: "assets/Dark.png", rarity: 'Uncommon' },
+            { id: 'sand', name: "Sand", price: 420000, img: "assets/Sand.png", rarity: 'Uncommon' },
+            { id: 'ice', name: "Ice", price: 350000, img: "assets/Ice.png", rarity: 'Uncommon' },
+            { id: 'flame', name: "Flame", price: 250000, img: "assets/Flame.png", rarity: 'Uncommon' },
+
+            { id: 'spike', name: "Spike", price: 180000, img: "assets/Spike.png", rarity: 'Common' },
+            { id: 'smoke', name: "Smoke", price: 100000, img: "assets/Smoke.png", rarity: 'Common' },
+            { id: 'bomb', name: "Bomb", price: 80000, img: "assets/Bomb.png", rarity: 'Common' },
+            { id: 'spring', name: "Spring", price: 60000, img: "assets/Spring.png", rarity: 'Common' },
+            { id: 'blade', name: "Blade", price: 30000, img: "assets/Blade.png", rarity: 'Common' }, 
+            { id: 'spin', name: "Spin", price: 7500, img: "assets/Spin.png", rarity: 'Common' },
+            { id: 'rocket', name: "Rocket", price: 5000, img: "assets/Rocket.png", rarity: 'Common' }
+        ];
+
+        let calcState = { you: [], them: [] };
+        let calcCurrentActiveSide = '';
+        let animatedSlot = { side: null, index: null };
+
+        function formatVal(num) { return num.toLocaleString('id-ID'); }
+        function formatShort(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1).replace('.0', '') + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1).replace('.0', '') + 'k';
+            return num;
+        }
+
+        function getCalcRarityClass(rarity) {
+            switch(rarity) {
+                case 'Mythical': return 'mythical-bg'; case 'Legendary': return 'legendary-bg';
+                case 'Rare': return 'rare-bg'; case 'Uncommon': return 'uncommon-bg';
+                case 'Common': return 'common-bg'; default: return '';
+            }
+        }
+
+        function initCalc() {
+            const modalList = document.getElementById('fruit-list-modal');
+            modalList.innerHTML = ''; 
+            calcFruitData.forEach(fruit => {
+                const btn = document.createElement('div');
+                btn.className = `slot slot-filled ${getCalcRarityClass(fruit.rarity)}`;
+                btn.onclick = function() { selectFruitWithAnim(fruit, this); };
+                btn.innerHTML = `
+                    <div class="card-header" title="${fruit.name}">${fruit.name}</div>
+                    <div class="card-body"><img src="${fruit.img}" alt="${fruit.name}" loading="lazy" class="fruit-img"></div>
+                    <div class="card-footer">${formatShort(fruit.price)}</div>
+                `;
+                modalList.appendChild(btn);
+            });
+            updateCalcUI();
+        }
+
+        function openModal(side) {
+            calcCurrentActiveSide = side; const modal = document.getElementById('modal');
+            modal.style.display = 'flex'; requestAnimationFrame(() => { modal.classList.add('show'); });
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal'); modal.classList.remove('show');
+            setTimeout(() => { modal.style.display = 'none'; }, 150); 
+        }
+        
+        function closeModalOnOutsideClick(e) { if(e.target.id === 'modal') closeModal(); }
+
+        function selectFruitWithAnim(fruit, element) {
+            if (element.classList.contains('animate-pop-out')) return; 
+            if (calcState[calcCurrentActiveSide].length < 4) {
+                element.classList.add('animate-pop-out');
+                setTimeout(() => {
+                    animatedSlot = { side: calcCurrentActiveSide, index: calcState[calcCurrentActiveSide].length };
+                    calcState[calcCurrentActiveSide].push(fruit); updateCalcUI(); 
+                    if (calcState[calcCurrentActiveSide].length === 4) closeModal();
+                    element.classList.remove('animate-pop-out');
+                }, 80);
+            } else { alert("Maksimal 4 buah dalam 1 meja!"); }
+        }
+
+        function removeFruitWithAnim(side, fruitObj, element) {
+            element.classList.remove('animate-pop-in'); element.classList.add('animate-pop-out');
+            setTimeout(() => {
+                const idx = calcState[side].indexOf(fruitObj);
+                if (idx > -1) { calcState[side].splice(idx, 1); updateCalcUI(); }
+            }, 80);
+        }
+
+        function resetAllCalc() { calcState.you = []; calcState.them = []; updateCalcUI(); }
+
+        function renderCalcSlots(side) {
+            const gridEl = document.getElementById(`${side}-grid`); gridEl.innerHTML = ''; let totalBeli = 0;
+            for (let i = 0; i < 4; i++) {
+                const slotDiv = document.createElement('div');
+                if (i < calcState[side].length) {
+                    const fruit = calcState[side][i]; totalBeli += fruit.price;
+                    slotDiv.className = `slot slot-filled ${getCalcRarityClass(fruit.rarity)}`;
+                    slotDiv.onclick = function() { removeFruitWithAnim(side, fruit, this); }; 
+                    slotDiv.innerHTML = `
+                        <div class="card-header">${fruit.name}</div>
+                        <div class="card-body"><img src="${fruit.img}" alt="${fruit.name}" class="fruit-img"></div>
+                        <div class="card-footer">${formatShort(fruit.price)}</div>
+                    `;
+                    if (animatedSlot.side === side && animatedSlot.index === i) slotDiv.classList.add('animate-pop-in');
+                } else if (i === calcState[side].length) {
+                    slotDiv.className = `slot slot-empty`; slotDiv.onclick = () => openModal(side); 
+                    slotDiv.innerHTML = `<span class="slot-plus">+</span>`;
+                } else {
+                    slotDiv.className = `slot slot-disabled`; slotDiv.innerHTML = ``;
+                }
+                gridEl.appendChild(slotDiv);
+            }
+            document.getElementById(`${side}-total-price`).innerHTML = `<span style="color: var(--text-muted);">Total Value:</span> <span style="color: var(--accent);">$${formatVal(totalBeli)}</span>`;
+            return totalBeli;
+        }
+
+        function updateCalcUI() {
+            let totalYou = renderCalcSlots('you'); let totalThem = renderCalcSlots('them');
+            calculateStatus(totalYou, totalThem); animatedSlot = { side: null, index: null };
+        }
+
+        function calculateStatus(you, them) {
+            const uiPercent = document.getElementById('ui-percent'); const uiStatus = document.getElementById('ui-status'); const uiMissing = document.getElementById('ui-missing-info');
+            if (you === 0 && them === 0) {
+                uiPercent.innerText = "0%"; uiPercent.className = "diff-percent text-green"; uiStatus.innerText = ""; uiMissing.style.display = 'none'; return;
+            }
+            let max = Math.max(you, them); let min = Math.min(you, them);
+            let diffPercent = ((max - min) / max) * 100;
+            uiPercent.innerText = Math.round(diffPercent) + "%";
+
+            if (min >= (max * 0.6)) {
+                uiPercent.classList.remove('text-red'); uiPercent.classList.add('text-green');
+                uiStatus.innerText = "TRADE FAIR"; uiMissing.style.display = 'none'; 
+            } else {
+                uiPercent.classList.remove('text-green'); uiPercent.classList.add('text-red'); uiStatus.innerText = "INVALID";
+                let shortfall = (max * 0.6) - min; let whoNeedsMore = (you < them) ? "You" : "Them";
+                uiMissing.innerHTML = `${whoNeedsMore} Need Adds:<br><span>$${formatVal(shortfall)}</span>`; uiMissing.style.display = 'block'; 
+            }
+        }
+
+        // =========================================
+        // JALANKAN SAAT WEB DIMUAT
+        // =========================================
+        window.onload = function() {
+            renderTabs();
+            initCalc();
+            
+            // REVISI BUG: Mengecek halaman terakhir yang dibuka oleh user sebelum refresh
+            let savedView = localStorage.getItem('bloxAppView') || 'stock';
+            switchView(savedView); 
+        };
+    </script>
+</body>
+</html>
