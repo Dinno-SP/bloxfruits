@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Stock BF</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0f172a">
-    <link rel="apple-touch-icon" href="assets/logo.png">
+    <title>Blox Fruits Super App</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
     
     <style>
@@ -22,13 +19,18 @@
             --btn-move-plus: #059669;
             --btn-move-minus: #dc2626;
             
+            /* Warna Rarity Dasar */
             --mythical-top: #ef4444; --mythical-mid: rgba(220, 38, 38, 0.5); --mythical-bot: #450a0a;
             --legendary-top: #d946ef; --legendary-mid: rgba(192, 38, 211, 0.5); --legendary-bot: #4a044e;
+            
+            /* WARNA BARU: Epic (Oranye Terang - Jauh dari hijau dan warna lain) */
+            --epic-top: #f97316; --epic-mid: rgba(249, 115, 22, 0.5); --epic-bot: #7c2d12;
+            
             --rare-top: #3b82f6; --rare-mid: rgba(37, 99, 235, 0.5); --rare-bot: #172554;
             --uncommon-top: #06b6d4; --uncommon-mid: rgba(8, 145, 178, 0.5); --uncommon-bot: #083344;
             --common-top: #94a3b8; --common-mid: rgba(100, 116, 139, 0.5); --common-bot: #0f172a;
             
-            /* WARNA BARU: Special Gray & Special Gold */
+            /* WARNA: Special Gray & Special Gold */
             --special-gray-top: #4b5563; --special-gray-mid: rgba(75, 85, 99, 0.5); --special-gray-bot: #1f2937;
             --special-gold-top: #eab308; --special-gold-mid: rgba(234, 179, 8, 0.5); --special-gold-bot: #92400e;
         }
@@ -125,6 +127,11 @@
         .rarity-legendary .card-body, .legendary-bg .card-body { background: linear-gradient(to bottom, var(--legendary-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
         .rarity-legendary .card-footer, .legendary-bg .card-footer { background-color: var(--legendary-bot); }
 
+        /* WARNA BACKGROUND EPIC */
+        .rarity-epic .card-header, .epic-bg .card-header { background-color: var(--epic-top); }
+        .rarity-epic .card-body, .epic-bg .card-body { background: linear-gradient(to bottom, var(--epic-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
+        .rarity-epic .card-footer, .epic-bg .card-footer { background-color: var(--epic-bot); }
+
         .rarity-rare .card-header, .rare-bg .card-header { background-color: var(--rare-top); }
         .rarity-rare .card-body, .rare-bg .card-body { background: linear-gradient(to bottom, var(--rare-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
         .rarity-rare .card-footer, .rare-bg .card-footer { background-color: var(--rare-bot); }
@@ -137,7 +144,6 @@
         .rarity-common .card-body, .common-bg .card-body { background: linear-gradient(to bottom, var(--common-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
         .rarity-common .card-footer, .common-bg .card-footer { background-color: var(--common-bot); }
 
-        /* REVISI WARNA BACKGROUND BARU */
         .rarity-special-gray .card-header, .special-gray-bg .card-header { background-color: var(--special-gray-top); }
         .rarity-special-gray .card-body, .special-gray-bg .card-body { background: linear-gradient(to bottom, var(--special-gray-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
         .rarity-special-gray .card-footer, .special-gray-bg .card-footer { background-color: var(--special-gray-bot); }
@@ -303,6 +309,7 @@
         .modal-close { cursor: pointer; background: rgba(239, 68, 68, 0.2); color: #ef4444; border: none; width: 32px; height: 32px; border-radius: 50%; font-weight: bold; font-size: 16px; display: flex; justify-content: center; align-items: center; transition: 0.2s; }
         .modal-body { padding: 15px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; align-items: start; }
 
+
         /* =========================================
            RESPONSIF MOBILE (KUNCI LAYAR KALKULATOR)
            ========================================= */
@@ -319,12 +326,34 @@
                 justify-content: flex-start;
             }
             
-            .calculator-container { padding: 0; height: 100%; width: 100%; display: flex; flex-direction: column; }
-            .main-layout { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 10px 8px; width: 100%; height: 100%; }
+            .calculator-container { 
+                padding: 0; 
+                height: 100%; 
+                width: 100%;
+                display: flex; 
+                flex-direction: column; 
+            }
+            
+            .main-layout { 
+                display: grid; 
+                grid-template-columns: 1fr 1fr; 
+                grid-template-rows: auto auto; 
+                gap: 10px 8px; 
+                width: 100%; 
+                height: 100%;
+            }
             
             #side-you { grid-column: 1; grid-row: 1; width: 100%; order: unset; }
             #side-them { grid-column: 2; grid-row: 1; width: 100%; order: unset; }
-            .center-area { grid-column: 1 / 3; grid-row: 2; width: 100%; margin-top: 0; order: unset; justify-content: flex-start; padding-top: 0; }
+            .center-area { 
+                grid-column: 1 / 3; 
+                grid-row: 2; 
+                width: 100%; 
+                margin-top: 0; 
+                order: unset; 
+                justify-content: flex-start;
+                padding-top: 0;
+            }
             
             .side { padding: 8px; border-radius: 12px; } 
             .side h2 { font-size: 13px; margin: 0 0 6px 0; padding-bottom: 4px; }
@@ -450,7 +479,7 @@
     <div class="modal-overlay" id="modal" onclick="closeModalOnOutsideClick(event)">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Pilih Buah (Max 4)</h3>
+                <h3>Pilih Buah</h3>
                 <button class="modal-close" onclick="closeModal()">✖</button>
             </div>
             <div class="modal-body" id="fruit-list-modal"></div>
@@ -469,7 +498,7 @@
         }
 
         // =========================================
-        // DAFTAR ITEM 
+        // DAFTAR ITEM (REVISI EPIC & UNCOMMON)
         // =========================================
         const orderedFruits = [
             // Mythical
@@ -494,20 +523,20 @@
             {name: "Buddha", price: 1200000, rarity: "legendary"},
             {name: "Pain", price: 2300000, rarity: "legendary"},
             {name: "Blizzard", price: 2400000, rarity: "legendary"},
-            {name: "Phoenix", price: 1800000, rarity: "legendary"},
-            {name: "Sound", price: 1700000, rarity: "legendary"},
-            {name: "Spider", price: 1500000, rarity: "legendary"},
-            {name: "Creation", price: 1400000, rarity: "legendary"},
-            {name: "Love", price: 1300000, rarity: "legendary"},
-            {name: "Quake", price: 1000000, rarity: "legendary"},
             
-            // Rare
-            {name: "Magma", price: 960000, rarity: "rare"},
-            {name: "Ghost", price: 940000, rarity: "rare"},
-            {name: "Rubber", price: 750000, rarity: "rare"},
-            {name: "Light", price: 650000, rarity: "rare"},
+            // Epic (Baru)
+            {name: "Phoenix", price: 1800000, rarity: "epic"},
+            {name: "Sound", price: 1700000, rarity: "epic"},
+            {name: "Spider", price: 1500000, rarity: "epic"},
+            {name: "Creation", price: 1400000, rarity: "epic"},
+            {name: "Love", price: 1300000, rarity: "epic"},
+            {name: "Quake", price: 1000000, rarity: "epic"},
+            {name: "Magma", price: 960000, rarity: "epic"},
+            {name: "Ghost", price: 940000, rarity: "epic"},
+            {name: "Rubber", price: 750000, rarity: "epic"},
             
-            // Uncommon
+            // Uncommon (Light masuk sini)
+            {name: "Light", price: 650000, rarity: "uncommon"},
             {name: "Diamond", price: 600000, rarity: "uncommon"},
             {name: "Eagle", price: 550000, rarity: "uncommon"},
             {name: "Dark", price: 500000, rarity: "uncommon"},
@@ -526,7 +555,6 @@
             {name: "Celebration", price: 0, img: "celebration", rarity: "common"} 
         ];
 
-        // REVISI: Rarity untuk Eclipse, Tokens, Parrot diubah menjadi special-gray
         const orderedSkins = [
             {name: "Galaxy Empyrean Kitsune", rarity: "mythical"}, {name: "Ember West Dragon", rarity: "mythical"}, {name: "Crimson Kitsune", rarity: "mythical"},
             {name: "Purple Lightning", rarity: "legendary"}, {name: "Yellow Lightning", rarity: "legendary"}, {name: "Red Lightning", rarity: "legendary"},
@@ -538,7 +566,6 @@
             {name: "Eclipse", rarity: "special-gray"}, {name: "Permanent Dragon Token", rarity: "special-gray"}, {name: "Dragon Token", rarity: "special-gray"}, {name: "Parrot", rarity: "special-gray"}
         ];
 
-        // REVISI: Rarity untuk seluruh Gamepasses diubah menjadi special-gold
         const orderedGamepasses = [
             {name: "Fruit Notifier", rarity: "special-gold"}, {name: "Mythical Scrolls", rarity: "special-gold"}, {name: "Dark Blade", rarity: "special-gold"},
             {name: "Legendary Scrolls", rarity: "special-gold"}, {name: "2x Mastery", rarity: "special-gold"}, {name: "2x Money", rarity: "special-gold"}, 
@@ -556,9 +583,9 @@
             "Clone_4": { info: "Storage 4", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) }
         };
 
-        // Menggunakan Database V10 agar Rarity baru ter-apply sempurna
-        let currentAccount = localStorage.getItem('bloxCurrentTab_v10') || "Royal_D";
-        let currentCategory = localStorage.getItem('bloxCurrentCat_v10') || "fruits";
+        // Menggunakan Database V11 agar urutan EPIC baru ter-apply sempurna
+        let currentAccount = localStorage.getItem('bloxCurrentTab_v11') || "Royal_D";
+        let currentCategory = localStorage.getItem('bloxCurrentCat_v11') || "fruits";
 
         // =========================================
         // LOGIKA DASHBOARD (NAVIGASI)
@@ -606,12 +633,12 @@
         // LOGIKA STOCK INVENTORY
         // =========================================
         function initData() {
-            const savedData = localStorage.getItem('bloxStockData_v10'); 
+            const savedData = localStorage.getItem('bloxStockData_v11'); 
             if (savedData) return JSON.parse(savedData);
             saveData(defaultData); return JSON.parse(JSON.stringify(defaultData));
         }
 
-        function saveData(data) { localStorage.setItem('bloxStockData_v10', JSON.stringify(data)); }
+        function saveData(data) { localStorage.setItem('bloxStockData_v11', JSON.stringify(data)); }
 
         function renderTabs() {
             let appData = initData();
@@ -624,7 +651,7 @@
                 btn.className = `tab-btn ${accName === currentAccount ? 'active' : ''}`;
                 btn.innerText = accName.replace('_', ' ');
                 btn.onclick = () => {
-                    currentAccount = accName; localStorage.setItem('bloxCurrentTab_v10', currentAccount);
+                    currentAccount = accName; localStorage.setItem('bloxCurrentTab_v11', currentAccount);
                     renderTabs(); renderContent(true); 
                 };
                 tabContainer.appendChild(btn);
@@ -637,7 +664,7 @@
             });
         }
 
-        function changeCategory(cat) { currentCategory = cat; localStorage.setItem('bloxCurrentCat_v10', currentCategory); renderTabs(); renderContent(true); }
+        function changeCategory(cat) { currentCategory = cat; localStorage.setItem('bloxCurrentCat_v11', currentCategory); renderTabs(); renderContent(true); }
 
         function getRarityClass(itemName) {
             const item = masterDict.find(f => f.name === itemName);
@@ -674,13 +701,12 @@
             selectedGrid.innerHTML = ''; unselectedGrid.innerHTML = '';
             let selectedCount = 0; let unselectedCount = 0;
 
-            let maxStocks = { legendary: 0, rare: 0, uncommon: 0, common: 0 };
+            // Tambahkan epic ke dalam objek perhitungan maxStocks
+            let maxStocks = { legendary: 0, epic: 0, rare: 0, uncommon: 0, common: 0 };
             
             // FUNGSI HELPER UNTUK PENGECUALIAN HIGH SCORE
             const isExcludedFromHighScore = (itemName, rarity) => {
-                // REVISI: Hanya Fruits yang masuk system angka hijau
                 if (currentCategory !== 'fruits') return true;
-                
                 if (rarity === 'mythical') return true;
                 if (['Blizzard', 'Portal', 'Buddha', 'Lightning', 'Celebration', 'Pain'].includes(itemName)) return true;
                 if (rarity === 'common' && itemName !== 'Spike') return true;
@@ -792,6 +818,7 @@
         // LOGIKA CALCULATOR
         // =========================================
         const calcFruitData = [
+            // Mythical
             { id: 'dragon', name: "Dragon", price: 15000000, img: "Dragon", rarity: 'mythical' },
             { id: 'control', name: "Control", price: 9000000, rarity: 'mythical' },
             { id: 'kitsune', name: "Kitsune", price: 8000000, rarity: 'mythical' },
@@ -806,23 +833,26 @@
             { id: 'gravity', name: "Gravity", price: 2500000, rarity: 'mythical' },
             { id: 'shadow', name: "Shadow", price: 2900000, rarity: 'mythical' },
 
+            // Legendary
             { id: 'lightning', name: "Lightning", price: 2100000, rarity: 'legendary' },
             { id: 'portal', name: "Portal", price: 1900000, rarity: 'legendary' },
             { id: 'buddha', name: "Buddha", price: 1200000, rarity: 'legendary' },
             { id: 'pain', name: "Pain", price: 2300000, rarity: 'legendary' },
             { id: 'blizzard', name: "Blizzard", price: 2400000, rarity: 'legendary' },
-            { id: 'phoenix', name: "Phoenix", price: 1800000, rarity: 'legendary' },
-            { id: 'sound', name: "Sound", price: 1700000, rarity: 'legendary' },
-            { id: 'spider', name: "Spider", price: 1500000, rarity: 'legendary' },
-            { id: 'creation', name: "Creation", price: 1400000, rarity: 'legendary' },
-            { id: 'love', name: "Love", price: 1300000, rarity: 'legendary' },
-            { id: 'quake', name: "Quake", price: 1000000, rarity: 'legendary' },
 
-            { id: 'magma', name: "Magma", price: 960000, rarity: 'rare' },
-            { id: 'ghost', name: "Ghost", price: 940000, rarity: 'rare' },
-            { id: 'rubber', name: "Rubber", price: 750000, rarity: 'rare' },
-            { id: 'light', name: "Light", price: 650000, rarity: 'rare' },
+            // Epic
+            { id: 'phoenix', name: "Phoenix", price: 1800000, rarity: 'epic' },
+            { id: 'sound', name: "Sound", price: 1700000, rarity: 'epic' },
+            { id: 'spider', name: "Spider", price: 1500000, rarity: 'epic' },
+            { id: 'creation', name: "Creation", price: 1400000, rarity: 'epic' },
+            { id: 'love', name: "Love", price: 1300000, rarity: 'epic' },
+            { id: 'quake', name: "Quake", price: 1000000, rarity: 'epic' },
+            { id: 'magma', name: "Magma", price: 960000, rarity: 'epic' },
+            { id: 'ghost', name: "Ghost", price: 940000, rarity: 'epic' },
+            { id: 'rubber', name: "Rubber", price: 750000, rarity: 'epic' },
 
+            // Uncommon (Light pindah kesini)
+            { id: 'light', name: "Light", price: 650000, rarity: 'uncommon' },
             { id: 'diamond', name: "Diamond", price: 600000, rarity: 'uncommon' },
             { id: 'eagle', name: "Eagle", price: 550000, rarity: 'uncommon' },
             { id: 'dark', name: "Dark", price: 500000, rarity: 'uncommon' },
@@ -830,6 +860,7 @@
             { id: 'ice', name: "Ice", price: 350000, rarity: 'uncommon' },
             { id: 'flame', name: "Flame", price: 250000, rarity: 'uncommon' },
 
+            // Common
             { id: 'spike', name: "Spike", price: 180000, rarity: 'common' },
             { id: 'smoke', name: "Smoke", price: 100000, rarity: 'common' },
             { id: 'bomb', name: "Bomb", price: 80000, rarity: 'common' },
@@ -847,6 +878,7 @@
         function getCalcRarityClass(rarity) {
             switch(rarity) {
                 case 'mythical': return 'mythical-bg'; case 'legendary': return 'legendary-bg';
+                case 'epic': return 'epic-bg';
                 case 'rare': return 'rare-bg'; case 'uncommon': return 'uncommon-bg';
                 case 'common': return 'common-bg'; 
                 case 'special-gold': return 'special-gold-bg';
