@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Blox Fruits Super App</title>
+    <title>Stock BF</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
     
     <style>
@@ -394,7 +394,7 @@
 
     <nav class="main-navbar">
         <button class="hamburger-btn" onclick="toggleSidebar(true)">☰</button>
-        <h1 class="app-title" id="app-title">Stock Pro</h1>
+        <h1 class="app-title" id="app-title">Stock</h1>
     </nav>
 
     <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar(false)"></div>
@@ -616,7 +616,7 @@
                 calcView.style.display = 'none';
                 document.body.classList.remove('calc-mode');
                 menuStock.classList.add('active'); menuCalc.classList.remove('active');
-                title.innerText = "Stock Pro";
+                title.innerText = "Stock";
                 
                 renderContent(true);
             } else {
@@ -624,7 +624,7 @@
                 calcView.style.display = 'flex';
                 document.body.classList.add('calc-mode');
                 menuStock.classList.remove('active'); menuCalc.classList.add('active');
-                title.innerText = "Calculator Pro";
+                title.innerText = "Calculator";
             }
             toggleSidebar(false);
         }
