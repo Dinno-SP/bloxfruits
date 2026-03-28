@@ -1005,16 +1005,6 @@
             let savedView = localStorage.getItem('bloxAppView') || 'stock';
             switchView(savedView); 
         };
-        // =========================================
-        // JALANKAN SAAT WEB DIMUAT
-        // =========================================
-        window.onload = function() {
-            renderTabs();
-            initCalc();
-            
-            let savedView = localStorage.getItem('bloxAppView') || 'stock';
-            switchView(savedView); 
-        };
 
         // KODE BARU: Daftarkan Service Worker agar bisa di-Install
         if ('serviceWorker' in navigator) {
