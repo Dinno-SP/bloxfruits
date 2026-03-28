@@ -24,18 +24,13 @@
             --btn-move-plus: #059669;
             --btn-move-minus: #dc2626;
             
-            /* Warna Rarity Dasar */
             --mythical-top: #ef4444; --mythical-mid: rgba(220, 38, 38, 0.5); --mythical-bot: #450a0a;
             --legendary-top: #d946ef; --legendary-mid: rgba(192, 38, 211, 0.5); --legendary-bot: #4a044e;
-            
-            /* WARNA BARU: Epic (Oranye Terang - Jauh dari hijau dan warna lain) */
             --epic-top: #f97316; --epic-mid: rgba(249, 115, 22, 0.5); --epic-bot: #7c2d12;
-            
             --rare-top: #3b82f6; --rare-mid: rgba(37, 99, 235, 0.5); --rare-bot: #172554;
             --uncommon-top: #06b6d4; --uncommon-mid: rgba(8, 145, 178, 0.5); --uncommon-bot: #083344;
             --common-top: #94a3b8; --common-mid: rgba(100, 116, 139, 0.5); --common-bot: #0f172a;
             
-            /* WARNA: Special Gray & Special Gold */
             --special-gray-top: #4b5563; --special-gray-mid: rgba(75, 85, 99, 0.5); --special-gray-bot: #1f2937;
             --special-gold-top: #eab308; --special-gold-mid: rgba(234, 179, 8, 0.5); --special-gold-bot: #92400e;
         }
@@ -112,11 +107,7 @@
 
         .text-green { color: #10b981 !important; text-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
         .text-red { color: #ef4444 !important; text-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
-        
-        .text-green-glow {
-            color: #10b981 !important;
-            text-shadow: 0 0 10px rgba(16, 185, 129, 0.8), 0 0 20px rgba(16, 185, 129, 0.5) !important;
-        }
+        .text-green-glow { color: #10b981 !important; text-shadow: 0 0 10px rgba(16, 185, 129, 0.8), 0 0 20px rgba(16, 185, 129, 0.5) !important; }
         
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -132,7 +123,6 @@
         .rarity-legendary .card-body, .legendary-bg .card-body { background: linear-gradient(to bottom, var(--legendary-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
         .rarity-legendary .card-footer, .legendary-bg .card-footer { background-color: var(--legendary-bot); }
 
-        /* WARNA BACKGROUND EPIC */
         .rarity-epic .card-header, .epic-bg .card-header { background-color: var(--epic-top); }
         .rarity-epic .card-body, .epic-bg .card-body { background: linear-gradient(to bottom, var(--epic-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
         .rarity-epic .card-footer, .epic-bg .card-footer { background-color: var(--epic-bot); }
@@ -156,7 +146,6 @@
         .rarity-special-gold .card-header, .special-gold-bg .card-header { background-color: var(--special-gold-top); }
         .rarity-special-gold .card-body, .special-gold-bg .card-body { background: linear-gradient(to bottom, var(--special-gold-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
         .rarity-special-gold .card-footer, .special-gold-bg .card-footer { background-color: var(--special-gold-bot); }
-
 
         /* =========================================
            GAYA KHUSUS: INVENTORY STOCK
@@ -188,8 +177,20 @@
             border: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden;
         }
         .account-header::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(to bottom, #f59e0b, #ea580c); }
+        
+        .account-title-wrapper { display: flex; flex-direction: column; justify-content: center; }
         .account-title h2 { margin: 0; font-size: 16px; font-weight: 800; color: #fff;}
         .account-title p { margin: 2px 0 0 0; color: var(--text-muted); font-size: 11px; font-weight: 600;}
+
+        /* REVISI: Tombol Mode Edit */
+        .controls-wrapper { display: flex; align-items: center; gap: 12px; }
+        .btn-edit-mode {
+            background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 800;
+            cursor: pointer; transition: 0.2s; font-family: 'Poppins', sans-serif;
+        }
+        .btn-edit-mode.active { background-color: var(--btn-plus); border-color: var(--btn-plus); color: white; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4); }
+        .btn-edit-mode:active { transform: scale(0.95); }
 
         .slot-tracker { display: flex; align-items: center; gap: 8px; background-color: rgba(0,0,0,0.3); padding: 6px 10px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
         .slot-count { font-size: 13px; font-weight: 800; width: 28px; text-align: center; color: #fff;}
@@ -197,6 +198,9 @@
         .btn-slot:active { transform: scale(0.85); }
         .btn-slot-minus { background-color: var(--btn-minus); }
         .btn-slot-plus { background-color: var(--btn-plus); }
+
+        /* Sembunyikan tombol Pindah dan +/- saat Mode Edit MATI */
+        .mode-view .btn-move, .mode-view .btn-stock, .mode-view .btn-slot { display: none !important; }
 
         .section-title { font-size: 14px; font-weight: 800; color: #fff; margin: 20px 0 10px 0; padding-bottom: 8px; border-bottom: 2px solid rgba(255,255,255,0.1); text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
         .section-selected .section-title { color: var(--accent); border-color: rgba(245, 158, 11, 0.3); }
@@ -215,25 +219,29 @@
         .section-selected .btn-move { background-color: var(--btn-move-minus); }
         .section-unselected .btn-move { background-color: var(--btn-move-plus); }
 
+        /* REVISI: Perubahan letak teks Nama berdasarkan Mode */
         .item-card .card-header { 
-            color: #ffffff;
-            font-size: 12.5px; 
-            font-weight: 900; 
-            text-align: center; 
-            padding: 5px 0; 
-            text-shadow: 1px 1px 3px rgba(0,0,0,1);
+            color: #ffffff; font-size: 12.5px; font-weight: 900; 
+            padding: 5px 0; text-shadow: 1px 1px 3px rgba(0,0,0,1);
             border-bottom: 1px solid rgba(0,0,0,0.4); 
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
-            padding-right: 15px; 
-            border-radius: 10px 10px 0 0; 
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
+            border-radius: 10px 10px 0 0; transition: 0.2s;
+            text-align: center; /* Default saat Mode View (Edit mati) */
+            padding-right: 0; 
+        }
+        
+        /* Saat masuk Mode Edit, geser judul ke kiri agar tidak menabrak tombol pindah kartu */
+        .mode-edit .item-card .card-header {
+            text-align: left; padding-left: 8px; padding-right: 15px; 
         }
         
         .item-card .card-body { position: relative; background-size: cover; background-position: center; padding: 8px; display: flex; justify-content: center; align-items: center; aspect-ratio: 1 / 1; }
         .item-card .fruit-img { max-width: 95%; max-height: 95%; object-fit: contain; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.8)); transition: 0.2s;}
         .item-card:hover .fruit-img { transform: scale(1.08); }
+        
         .item-card .card-footer { display: flex; justify-content: space-between; align-items: center; padding: 6px; border-top: 1px solid rgba(0,0,0,0.5); border-radius: 0 0 10px 10px; }
+        /* Saat Mode View, pastikan angka stok berada pas di tengah */
+        .mode-view .item-card .card-footer { justify-content: center; }
 
         .btn-stock { width: 24px; height: 24px; border-radius: 6px; border: none; color: white; font-size: 16px; font-weight: 800; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.3); transition: 0.1s; }
         .btn-stock:active { transform: scale(0.85); }
@@ -243,6 +251,8 @@
 
         #view-stock .reset-btn { display: block; width: 100%; padding: 14px; margin-top: 40px; background-color: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; font-size: 13px; font-weight: 800; cursor: pointer; transition: 0.2s; font-family: 'Poppins'; }
         #view-stock .reset-btn:active { background-color: #ef4444; color: white; transform: scale(0.98); }
+        /* Sembunyikan tombol Reset Data kalau Mode Edit mati */
+        .mode-view #reset-btn { display: none; }
 
         @keyframes fadeSlide { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
         .animate-content { animation: fadeSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -314,9 +324,8 @@
         .modal-close { cursor: pointer; background: rgba(239, 68, 68, 0.2); color: #ef4444; border: none; width: 32px; height: 32px; border-radius: 50%; font-weight: bold; font-size: 16px; display: flex; justify-content: center; align-items: center; transition: 0.2s; }
         .modal-body { padding: 15px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; align-items: start; }
 
-
         /* =========================================
-           RESPONSIF MOBILE (KUNCI LAYAR KALKULATOR)
+           RESPONSIF MOBILE
            ========================================= */
         @media screen and (max-width: 768px) {
             body.calc-mode { overflow: hidden; height: 100vh; position: fixed; width: 100%; }
@@ -331,34 +340,12 @@
                 justify-content: flex-start;
             }
             
-            .calculator-container { 
-                padding: 0; 
-                height: 100%; 
-                width: 100%;
-                display: flex; 
-                flex-direction: column; 
-            }
-            
-            .main-layout { 
-                display: grid; 
-                grid-template-columns: 1fr 1fr; 
-                grid-template-rows: auto auto; 
-                gap: 10px 8px; 
-                width: 100%; 
-                height: 100%;
-            }
+            .calculator-container { padding: 0; height: 100%; width: 100%; display: flex; flex-direction: column; }
+            .main-layout { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 10px 8px; width: 100%; height: 100%; }
             
             #side-you { grid-column: 1; grid-row: 1; width: 100%; order: unset; }
             #side-them { grid-column: 2; grid-row: 1; width: 100%; order: unset; }
-            .center-area { 
-                grid-column: 1 / 3; 
-                grid-row: 2; 
-                width: 100%; 
-                margin-top: 0; 
-                order: unset; 
-                justify-content: flex-start;
-                padding-top: 0;
-            }
+            .center-area { grid-column: 1 / 3; grid-row: 2; width: 100%; margin-top: 0; order: unset; justify-content: flex-start; padding-top: 0; }
             
             .side { padding: 8px; border-radius: 12px; } 
             .side h2 { font-size: 13px; margin: 0 0 6px 0; padding-bottom: 4px; }
@@ -392,6 +379,9 @@
             .modal-header h3 { font-size: 13px; }
             .modal-body { grid-template-columns: repeat(auto-fill, minmax(65px, 1fr)); gap: 6px; padding: 8px; }
             .modal-body .slot { height: 95px; }
+            
+            /* Penyesuaian tombol Edit di layar HP */
+            .btn-edit-mode { padding: 4px 10px; font-size: 11px; }
         }
     </style>
 </head>
@@ -399,7 +389,7 @@
 
     <nav class="main-navbar">
         <button class="hamburger-btn" onclick="toggleSidebar(true)">☰</button>
-        <h1 class="app-title" id="app-title">Stock</h1>
+        <h1 class="app-title" id="app-title">Stock BF</h1>
     </nav>
 
     <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar(false)"></div>
@@ -416,7 +406,7 @@
 
     <main class="main-content" id="main-content">
         
-        <div id="view-stock">
+        <div id="view-stock" class="mode-view">
             <div class="stock-header">
                 <div class="stock-tabs" id="tab-container"></div>
                 <div class="category-tabs" id="category-tab-container">
@@ -503,10 +493,9 @@
         }
 
         // =========================================
-        // DAFTAR ITEM (REVISI EPIC & UNCOMMON)
+        // DAFTAR ITEM 
         // =========================================
         const orderedFruits = [
-            // Mythical
             {name: "West Dragon", price: 15000000, img: "WestDragon", rarity: "mythical"},
             {name: "East Dragon", price: 15000000, img: "EastDragon", rarity: "mythical"},
             {name: "Control", price: 9000000, rarity: "mythical"},
@@ -521,15 +510,11 @@
             {name: "Mammoth", price: 2700000, rarity: "mythical"},
             {name: "Gravity", price: 2500000, rarity: "mythical"},
             {name: "Shadow", price: 2900000, rarity: "mythical"},
-            
-            // Legendary
             {name: "Lightning", price: 2100000, rarity: "legendary"},
             {name: "Portal", price: 1900000, rarity: "legendary"},
             {name: "Buddha", price: 1200000, rarity: "legendary"},
             {name: "Pain", price: 2300000, rarity: "legendary"},
             {name: "Blizzard", price: 2400000, rarity: "legendary"},
-            
-            // Epic (Baru)
             {name: "Phoenix", price: 1800000, rarity: "epic"},
             {name: "Sound", price: 1700000, rarity: "epic"},
             {name: "Spider", price: 1500000, rarity: "epic"},
@@ -539,8 +524,6 @@
             {name: "Magma", price: 960000, rarity: "epic"},
             {name: "Ghost", price: 940000, rarity: "epic"},
             {name: "Rubber", price: 750000, rarity: "epic"},
-            
-            // Uncommon (Light masuk sini)
             {name: "Light", price: 650000, rarity: "uncommon"},
             {name: "Diamond", price: 600000, rarity: "uncommon"},
             {name: "Eagle", price: 550000, rarity: "uncommon"},
@@ -548,8 +531,6 @@
             {name: "Sand", price: 420000, rarity: "uncommon"},
             {name: "Ice", price: 350000, rarity: "uncommon"},
             {name: "Flame", price: 250000, rarity: "uncommon"},
-            
-            // Common
             {name: "Spike", price: 180000, rarity: "common"},
             {name: "Smoke", price: 100000, rarity: "common"},
             {name: "Bomb", price: 80000, rarity: "common"},
@@ -588,9 +569,11 @@
             "Clone_4": { info: "Storage 4", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) }
         };
 
-        // Menggunakan Database V11 agar urutan EPIC baru ter-apply sempurna
         let currentAccount = localStorage.getItem('bloxCurrentTab_v11') || "Royal_D";
         let currentCategory = localStorage.getItem('bloxCurrentCat_v11') || "fruits";
+
+        // Variabel global untuk status Edit Mode
+        let isEditMode = false;
 
         // =========================================
         // LOGIKA DASHBOARD (NAVIGASI)
@@ -621,7 +604,7 @@
                 calcView.style.display = 'none';
                 document.body.classList.remove('calc-mode');
                 menuStock.classList.add('active'); menuCalc.classList.remove('active');
-                title.innerText = "Stock";
+                title.innerText = "Stock BF";
                 
                 renderContent(true);
             } else {
@@ -632,6 +615,27 @@
                 title.innerText = "Calculator";
             }
             toggleSidebar(false);
+        }
+
+        // =========================================
+        // LOGIKA MODE EDIT
+        // =========================================
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            const stockView = document.getElementById('view-stock');
+            const editBtn = document.getElementById('btn-edit-mode');
+            
+            if (isEditMode) {
+                stockView.classList.remove('mode-view');
+                stockView.classList.add('mode-edit');
+                editBtn.classList.add('active');
+                editBtn.innerText = "✅ Selesai";
+            } else {
+                stockView.classList.remove('mode-edit');
+                stockView.classList.add('mode-view');
+                editBtn.classList.remove('active');
+                editBtn.innerText = "✎ Mode Edit";
+            }
         }
 
         // =========================================
@@ -690,15 +694,24 @@
                 }
             }
 
+            // REVISI: Tombol Edit Mode dimasukkan ke dalam Account Header
+            let editBtnText = isEditMode ? "✅ Selesai" : "✎ Mode Edit";
+            let editBtnClass = isEditMode ? "btn-edit-mode active" : "btn-edit-mode";
+
             document.getElementById('account-header').innerHTML = `
-                <div class="account-title">
-                    <h2>${currentAccount.replace('_', ' ')} <span style="font-size:12px; color:var(--accent);">(${currentCategory.toUpperCase()})</span></h2>
-                    <p>${acc.info}</p>
+                <div class="account-title-wrapper">
+                    <div class="account-title">
+                        <h2>${currentAccount.replace('_', ' ')} <span style="font-size:12px; color:var(--accent);">(${currentCategory.toUpperCase()})</span></h2>
+                        <p>${acc.info}</p>
+                    </div>
                 </div>
-                <div class="slot-tracker">
-                    <button class="btn-slot btn-slot-minus" onclick="updateSlotCount(-1)">-</button>
-                    <div class="slot-count">${acc.slotCount}/5</div>
-                    <button class="btn-slot btn-slot-plus" onclick="updateSlotCount(1)">+</button>
+                <div class="controls-wrapper">
+                    <button id="btn-edit-mode" class="${editBtnClass}" onclick="toggleEditMode()">${editBtnText}</button>
+                    <div class="slot-tracker">
+                        <button class="btn-slot btn-slot-minus" onclick="updateSlotCount(-1)">-</button>
+                        <div class="slot-count">${acc.slotCount}/5</div>
+                        <button class="btn-slot btn-slot-plus" onclick="updateSlotCount(1)">+</button>
+                    </div>
                 </div>
             `;
 
@@ -706,10 +719,8 @@
             selectedGrid.innerHTML = ''; unselectedGrid.innerHTML = '';
             let selectedCount = 0; let unselectedCount = 0;
 
-            // Tambahkan epic ke dalam objek perhitungan maxStocks
             let maxStocks = { legendary: 0, epic: 0, rare: 0, uncommon: 0, common: 0 };
             
-            // FUNGSI HELPER UNTUK PENGECUALIAN HIGH SCORE
             const isExcludedFromHighScore = (itemName, rarity) => {
                 if (currentCategory !== 'fruits') return true;
                 if (rarity === 'mythical') return true;
@@ -823,7 +834,6 @@
         // LOGIKA CALCULATOR
         // =========================================
         const calcFruitData = [
-            // Mythical
             { id: 'dragon', name: "Dragon", price: 15000000, img: "Dragon", rarity: 'mythical' },
             { id: 'control', name: "Control", price: 9000000, rarity: 'mythical' },
             { id: 'kitsune', name: "Kitsune", price: 8000000, rarity: 'mythical' },
@@ -838,14 +848,12 @@
             { id: 'gravity', name: "Gravity", price: 2500000, rarity: 'mythical' },
             { id: 'shadow', name: "Shadow", price: 2900000, rarity: 'mythical' },
 
-            // Legendary
             { id: 'lightning', name: "Lightning", price: 2100000, rarity: 'legendary' },
             { id: 'portal', name: "Portal", price: 1900000, rarity: 'legendary' },
             { id: 'buddha', name: "Buddha", price: 1200000, rarity: 'legendary' },
             { id: 'pain', name: "Pain", price: 2300000, rarity: 'legendary' },
             { id: 'blizzard', name: "Blizzard", price: 2400000, rarity: 'legendary' },
 
-            // Epic
             { id: 'phoenix', name: "Phoenix", price: 1800000, rarity: 'epic' },
             { id: 'sound', name: "Sound", price: 1700000, rarity: 'epic' },
             { id: 'spider', name: "Spider", price: 1500000, rarity: 'epic' },
@@ -856,7 +864,6 @@
             { id: 'ghost', name: "Ghost", price: 940000, rarity: 'epic' },
             { id: 'rubber', name: "Rubber", price: 750000, rarity: 'epic' },
 
-            // Uncommon (Light pindah kesini)
             { id: 'light', name: "Light", price: 650000, rarity: 'uncommon' },
             { id: 'diamond', name: "Diamond", price: 600000, rarity: 'uncommon' },
             { id: 'eagle', name: "Eagle", price: 550000, rarity: 'uncommon' },
@@ -865,7 +872,6 @@
             { id: 'ice', name: "Ice", price: 350000, rarity: 'uncommon' },
             { id: 'flame', name: "Flame", price: 250000, rarity: 'uncommon' },
 
-            // Common
             { id: 'spike', name: "Spike", price: 180000, rarity: 'common' },
             { id: 'smoke', name: "Smoke", price: 100000, rarity: 'common' },
             { id: 'bomb', name: "Bomb", price: 80000, rarity: 'common' },
