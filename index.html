@@ -46,10 +46,10 @@
         }
 
         /* =========================================
-           MAIN NAVBAR & SIDEBAR (DASHBOARD)
+           REVISI 3: NAVBAR DIPERKECIL (60px -> 50px)
            ========================================= */
         .main-navbar {
-            position: fixed; top: 0; left: 0; width: 100%; height: 60px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 50px;
             background-color: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -59,7 +59,7 @@
         }
 
         .hamburger-btn {
-            background: none; border: none; color: white; font-size: 28px;
+            background: none; border: none; color: white; font-size: 26px;
             cursor: pointer; padding: 0; margin-right: 15px;
             display: flex; justify-content: center; align-items: center;
         }
@@ -87,7 +87,7 @@
         .sidebar.active { left: 0; }
 
         .sidebar-header {
-            height: 60px; border-bottom: 1px solid rgba(255,255,255,0.05);
+            height: 50px; border-bottom: 1px solid rgba(255,255,255,0.05);
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 20px;
         }
@@ -103,7 +103,7 @@
         .menu-item:hover { background-color: rgba(255,255,255,0.05); color: #fff;}
         .menu-item.active { background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; box-shadow: 0 4px 12px var(--accent-glow);}
 
-        .main-content { padding-top: 60px; }
+        .main-content { padding-top: 50px; }
 
         .text-green { color: #10b981 !important; text-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
         .text-red { color: #ef4444 !important; text-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
@@ -114,7 +114,6 @@
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 5px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
 
-        /* KUMPULAN WARNA BACKGROUND RARITY KARTU */
         .rarity-mythical .card-header, .mythical-bg .card-header { background-color: var(--mythical-top); }
         .rarity-mythical .card-body, .mythical-bg .card-body { background: linear-gradient(to bottom, var(--mythical-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
         .rarity-mythical .card-footer, .mythical-bg .card-footer { background-color: var(--mythical-bot); }
@@ -153,7 +152,7 @@
         #view-stock { padding-bottom: 40px; }
         .stock-header {
             background-color: rgba(15, 23, 42, 0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            padding: 10px; text-align: center; position: sticky; top: 60px; z-index: 999;
+            padding: 10px; text-align: center; position: sticky; top: 50px; z-index: 999;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
         
@@ -180,9 +179,16 @@
         
         .account-title-wrapper { display: flex; flex-direction: column; justify-content: center; }
         .account-title h2 { margin: 0; font-size: 16px; font-weight: 800; color: #fff;}
-        .account-title p { margin: 2px 0 0 0; color: var(--text-muted); font-size: 11px; font-weight: 600;}
+        
+        /* REVISI: Tombol Storage di Mode Edit */
+        .storage-info { margin: 2px 0 0 0; color: var(--text-muted); font-size: 11px; font-weight: 600; display:flex; align-items:center; gap:5px; }
+        .btn-storage-edit { background: rgba(255,255,255,0.15); border:none; color: white; border-radius: 4px; width: 20px; height: 20px; font-weight: bold; cursor: pointer; display: flex; justify-content:center; align-items:center;}
+        .btn-storage-edit:active { transform: scale(0.85); background: var(--accent); }
+        
+        /* REVISI: Tombol Reset 0/5 di Mode Edit */
+        .btn-reset-slot { background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #ef4444; border-radius: 6px; height: 26px; width: 26px; cursor: pointer; display: flex; justify-content:center; align-items:center; transition: 0.2s;}
+        .btn-reset-slot:active { transform: rotate(-45deg) scale(0.9); }
 
-        /* REVISI: Tombol Mode Edit */
         .controls-wrapper { display: flex; align-items: center; gap: 12px; }
         .btn-edit-mode {
             background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
@@ -192,6 +198,7 @@
         .btn-edit-mode.active { background-color: var(--btn-plus); border-color: var(--btn-plus); color: white; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4); }
         .btn-edit-mode:active { transform: scale(0.95); }
 
+        .slot-tracker-wrapper { display: flex; align-items: center; gap: 5px; }
         .slot-tracker { display: flex; align-items: center; gap: 8px; background-color: rgba(0,0,0,0.3); padding: 6px 10px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
         .slot-count { font-size: 13px; font-weight: 800; width: 28px; text-align: center; color: #fff;}
         .btn-slot { width: 26px; height: 26px; border-radius: 50%; border: none; color: white; font-size: 16px; font-weight: 800; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.1s; }
@@ -199,7 +206,6 @@
         .btn-slot-minus { background-color: var(--btn-minus); }
         .btn-slot-plus { background-color: var(--btn-plus); }
 
-        /* Sembunyikan tombol Pindah dan +/- saat Mode Edit MATI */
         .mode-view .btn-move, .mode-view .btn-stock, .mode-view .btn-slot { display: none !important; }
 
         .section-title { font-size: 14px; font-weight: 800; color: #fff; margin: 20px 0 10px 0; padding-bottom: 8px; border-bottom: 2px solid rgba(255,255,255,0.1); text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
@@ -219,18 +225,16 @@
         .section-selected .btn-move { background-color: var(--btn-move-minus); }
         .section-unselected .btn-move { background-color: var(--btn-move-plus); }
 
-        /* REVISI: Perubahan letak teks Nama berdasarkan Mode */
         .item-card .card-header { 
             color: #ffffff; font-size: 12.5px; font-weight: 900; 
             padding: 5px 0; text-shadow: 1px 1px 3px rgba(0,0,0,1);
             border-bottom: 1px solid rgba(0,0,0,0.4); 
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
             border-radius: 10px 10px 0 0; transition: 0.2s;
-            text-align: center; /* Default saat Mode View (Edit mati) */
+            text-align: center; 
             padding-right: 0; 
         }
         
-        /* Saat masuk Mode Edit, geser judul ke kiri agar tidak menabrak tombol pindah kartu */
         .mode-edit .item-card .card-header {
             text-align: left; padding-left: 8px; padding-right: 15px; 
         }
@@ -240,7 +244,6 @@
         .item-card:hover .fruit-img { transform: scale(1.08); }
         
         .item-card .card-footer { display: flex; justify-content: space-between; align-items: center; padding: 6px; border-top: 1px solid rgba(0,0,0,0.5); border-radius: 0 0 10px 10px; }
-        /* Saat Mode View, pastikan angka stok berada pas di tengah */
         .mode-view .item-card .card-footer { justify-content: center; }
 
         .btn-stock { width: 24px; height: 24px; border-radius: 6px; border: none; color: white; font-size: 16px; font-weight: 800; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.3); transition: 0.1s; }
@@ -251,7 +254,6 @@
 
         #view-stock .reset-btn { display: block; width: 100%; padding: 14px; margin-top: 40px; background-color: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; font-size: 13px; font-weight: 800; cursor: pointer; transition: 0.2s; font-family: 'Poppins'; }
         #view-stock .reset-btn:active { background-color: #ef4444; color: white; transform: scale(0.98); }
-        /* Sembunyikan tombol Reset Data kalau Mode Edit mati */
         .mode-view #reset-btn { display: none; }
 
         @keyframes fadeSlide { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
@@ -297,10 +299,11 @@
             transform: scale(1.15);
         }
 
-        @keyframes popIn { 0% { opacity: 0; transform: scale(0.7); } 80% { transform: scale(1.05); } 100% { opacity: 1; transform: scale(1); } }
-        .animate-pop-in { animation: popIn 0.12s ease-out forwards; }
-        @keyframes popOut { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.6); } }
-        .animate-pop-out { animation: popOut 0.08s ease-in forwards; pointer-events: none; }
+        /* REVISI 5: Animasi Super Cepat di Kalkulator */
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
+        .animate-pop-in { animation: popIn 0.05s ease-out forwards; }
+        @keyframes popOut { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.8); } }
+        .animate-pop-out { animation: popOut 0.05s ease-in forwards; pointer-events: none; }
 
         .center-area { width: 30%; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 20px; box-sizing: border-box; }
         #view-calculator .reset-btn { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 10px 20px; font-weight: 800; font-size: 13px; cursor: pointer; margin-bottom: 30px; transition: 0.2s; text-transform: uppercase; display: flex; align-items: center; gap: 8px; justify-content: center; font-family: 'Poppins';}
@@ -315,9 +318,9 @@
         .totals-box { margin-top: 15px; width: 100%;}
         .total-row { background-color: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); padding: 10px 15px; border-radius: 8px; color: #fff; font-size: 14px; font-weight: 800; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); display: flex; justify-content: space-between; }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 4000; opacity: 0; transition: 0.15s; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 4000; opacity: 0; transition: 0.1s; }
         .modal-overlay.show { opacity: 1; } 
-        .modal-content { background-color: var(--panel-bg); width: 90%; max-width: 850px; height: 85%; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; transform: scale(0.95); transition: 0.15s; }
+        .modal-content { background-color: var(--panel-bg); width: 90%; max-width: 850px; height: 85%; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; transform: scale(0.95); transition: 0.1s; }
         .modal-overlay.show .modal-content { transform: scale(1); } 
         .modal-header { padding: 18px 24px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; background-color: rgba(0,0,0,0.2); border-radius: 16px 16px 0 0; }
         .modal-header h3 { margin: 0; color: var(--accent); font-size: 16px; font-weight: 800; text-transform: uppercase;}
@@ -331,7 +334,7 @@
             body.calc-mode { overflow: hidden; height: 100vh; position: fixed; width: 100%; }
             
             #view-calculator { 
-                height: calc(100vh - 60px); 
+                height: calc(100vh - 50px); 
                 display: flex; 
                 flex-direction: column; 
                 padding: 10px 5px; 
@@ -380,7 +383,6 @@
             .modal-body { grid-template-columns: repeat(auto-fill, minmax(65px, 1fr)); gap: 6px; padding: 8px; }
             .modal-body .slot { height: 95px; }
             
-            /* Penyesuaian tombol Edit di layar HP */
             .btn-edit-mode { padding: 4px 10px; font-size: 11px; }
         }
     </style>
@@ -482,9 +484,6 @@
     </div>
 
     <script>
-        // =========================================
-        // LOGIKA FORMAT HARGA
-        // =========================================
         function formatVal(num) { return num.toLocaleString('id-ID'); }
         function formatShort(num) {
             if (num >= 1000000) return (num / 1000000).toFixed(1).replace('.0', '') + 'M';
@@ -492,9 +491,6 @@
             return num;
         }
 
-        // =========================================
-        // DAFTAR ITEM 
-        // =========================================
         const orderedFruits = [
             {name: "West Dragon", price: 15000000, img: "WestDragon", rarity: "mythical"},
             {name: "East Dragon", price: 15000000, img: "EastDragon", rarity: "mythical"},
@@ -559,25 +555,20 @@
         ];
 
         const masterDict = [...orderedFruits, ...orderedSkins, ...orderedGamepasses];
-
         const generateList = (sourceArray) => sourceArray.map(f => ({ name: f.name, count: 0, selected: true }));
 
+        // REVISI 6: Menggunakan struktur data Storage dinamis V12
         const defaultData = {
-            "Royal_D": { info: "Storage 16", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) },
-            "Clone_2": { info: "Storage 8", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) },
-            "Clone_3": { info: "Storage 8", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) },
-            "Clone_4": { info: "Storage 4", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) }
+            "Royal_D": { storage: 16, slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) },
+            "Clone_2": { storage: 8, slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) },
+            "Clone_3": { storage: 8, slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) },
+            "Clone_4": { storage: 4, slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) }
         };
 
-        let currentAccount = localStorage.getItem('bloxCurrentTab_v11') || "Royal_D";
-        let currentCategory = localStorage.getItem('bloxCurrentCat_v11') || "fruits";
-
-        // Variabel global untuk status Edit Mode
+        let currentAccount = localStorage.getItem('bloxCurrentTab_v12') || "Royal_D";
+        let currentCategory = localStorage.getItem('bloxCurrentCat_v12') || "fruits";
         let isEditMode = false;
 
-        // =========================================
-        // LOGIKA DASHBOARD (NAVIGASI)
-        // =========================================
         function toggleSidebar(forceOpen) {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
@@ -605,7 +596,6 @@
                 document.body.classList.remove('calc-mode');
                 menuStock.classList.add('active'); menuCalc.classList.remove('active');
                 title.innerText = "Stock BF";
-                
                 renderContent(true);
             } else {
                 stockView.style.display = 'none';
@@ -617,9 +607,6 @@
             toggleSidebar(false);
         }
 
-        // =========================================
-        // LOGIKA MODE EDIT
-        // =========================================
         function toggleEditMode() {
             isEditMode = !isEditMode;
             const stockView = document.getElementById('view-stock');
@@ -636,18 +623,16 @@
                 editBtn.classList.remove('active');
                 editBtn.innerText = "✎ Mode Edit";
             }
+            renderContent(false); // Refresh untuk memunculkan tombol Reset & Storage
         }
 
-        // =========================================
-        // LOGIKA STOCK INVENTORY
-        // =========================================
         function initData() {
-            const savedData = localStorage.getItem('bloxStockData_v11'); 
+            const savedData = localStorage.getItem('bloxStockData_v12'); 
             if (savedData) return JSON.parse(savedData);
             saveData(defaultData); return JSON.parse(JSON.stringify(defaultData));
         }
 
-        function saveData(data) { localStorage.setItem('bloxStockData_v11', JSON.stringify(data)); }
+        function saveData(data) { localStorage.setItem('bloxStockData_v12', JSON.stringify(data)); }
 
         function renderTabs() {
             let appData = initData();
@@ -660,7 +645,7 @@
                 btn.className = `tab-btn ${accName === currentAccount ? 'active' : ''}`;
                 btn.innerText = accName.replace('_', ' ');
                 btn.onclick = () => {
-                    currentAccount = accName; localStorage.setItem('bloxCurrentTab_v11', currentAccount);
+                    currentAccount = accName; localStorage.setItem('bloxCurrentTab_v12', currentAccount);
                     renderTabs(); renderContent(true); 
                 };
                 tabContainer.appendChild(btn);
@@ -673,12 +658,36 @@
             });
         }
 
-        function changeCategory(cat) { currentCategory = cat; localStorage.setItem('bloxCurrentCat_v11', currentCategory); renderTabs(); renderContent(true); }
+        function changeCategory(cat) { currentCategory = cat; localStorage.setItem('bloxCurrentCat_v12', currentCategory); renderTabs(); renderContent(true); }
 
         function getRarityClass(itemName) {
             const item = masterDict.find(f => f.name === itemName);
             return item ? `rarity-${item.rarity}` : 'rarity-common';
         }
+
+        // FUNGSI BARU: Update Batas Storage
+        window.updateStorageLimit = function(amount) {
+            let appData = initData();
+            let newLimit = appData[currentAccount].storage + amount;
+            if (newLimit < 1) newLimit = 1;
+            appData[currentAccount].storage = newLimit;
+
+            // Jika storage dikecilkan, potong otomatis stok yang melewati batas
+            ['fruits', 'skins', 'gamepasses'].forEach(cat => {
+                appData[currentAccount][cat].forEach(item => {
+                    if (item.count > newLimit) item.count = newLimit;
+                });
+            });
+
+            saveData(appData); renderContent(false);
+        };
+
+        // FUNGSI BARU: Reset Slot ke 0
+        window.resetSlotCount = function() {
+            let appData = initData();
+            appData[currentAccount].slotCount = 0;
+            saveData(appData); renderContent(false);
+        };
 
         function renderContent(triggerAnimation = false) {
             const currentWindowScroll = window.scrollY;
@@ -694,23 +703,34 @@
                 }
             }
 
-            // REVISI: Tombol Edit Mode dimasukkan ke dalam Account Header
             let editBtnText = isEditMode ? "✅ Selesai" : "✎ Mode Edit";
             let editBtnClass = isEditMode ? "btn-edit-mode active" : "btn-edit-mode";
+
+            // Tombol edit Storage hanya muncul saat Mode Edit
+            let storageText = isEditMode ?
+                `Storage: <button class="btn-storage-edit" onclick="updateStorageLimit(-1)">-</button> <span style="color:#fff;font-weight:800;">${acc.storage}</span> <button class="btn-storage-edit" onclick="updateStorageLimit(1)">+</button>` :
+                `Storage: ${acc.storage}`;
+
+            // Tombol Reset Slot hanya muncul saat Mode Edit
+            let slotResetBtn = isEditMode ?
+                `<button class="btn-reset-slot" onclick="resetSlotCount()" title="Reset Slot">🔄</button>` : '';
 
             document.getElementById('account-header').innerHTML = `
                 <div class="account-title-wrapper">
                     <div class="account-title">
                         <h2>${currentAccount.replace('_', ' ')} <span style="font-size:12px; color:var(--accent);">(${currentCategory.toUpperCase()})</span></h2>
-                        <p>${acc.info}</p>
+                        <div class="storage-info">${storageText}</div>
                     </div>
                 </div>
                 <div class="controls-wrapper">
                     <button id="btn-edit-mode" class="${editBtnClass}" onclick="toggleEditMode()">${editBtnText}</button>
-                    <div class="slot-tracker">
-                        <button class="btn-slot btn-slot-minus" onclick="updateSlotCount(-1)">-</button>
-                        <div class="slot-count">${acc.slotCount}/5</div>
-                        <button class="btn-slot btn-slot-plus" onclick="updateSlotCount(1)">+</button>
+                    <div class="slot-tracker-wrapper">
+                        ${slotResetBtn}
+                        <div class="slot-tracker">
+                            <button class="btn-slot btn-slot-minus" onclick="updateSlotCount(-1)">-</button>
+                            <div class="slot-count">${acc.slotCount}/5</div>
+                            <button class="btn-slot btn-slot-plus" onclick="updateSlotCount(1)">+</button>
+                        </div>
                     </div>
                 </div>
             `;
@@ -765,7 +785,6 @@
                     isMax = true;
                 }
                 const stockCountClass = isMax ? 'stock-count text-green-glow' : 'stock-count';
-
                 const zeroClass = itemData.count === 0 ? 'stock-zero' : '';
                 
                 const card = document.createElement('div');
@@ -793,29 +812,35 @@
             });
 
             document.getElementById('selected-count').innerText = selectedCount; document.getElementById('unselected-count').innerText = unselectedCount;
-            document.getElementById('reset-btn').innerText = `⚠️ Reset ${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)} di Akun Ini`;
 
             if (!triggerAnimation) {
                 window.scrollTo(0, currentWindowScroll);
             }
         }
 
-        function toggleSelection(itemIndex) {
+        window.toggleSelection = function(itemIndex) {
             let appData = initData(); appData[currentAccount][currentCategory][itemIndex].selected = !appData[currentAccount][currentCategory][itemIndex].selected;
             saveData(appData); renderContent(false); 
-        }
+        };
 
-        function updateSlotCount(amount) {
+        window.updateSlotCount = function(amount) {
             let appData = initData(); let count = appData[currentAccount].slotCount + amount;
             if (count < 0) count = 0; if (count > 5) count = 5;
             appData[currentAccount].slotCount = count; saveData(appData); renderContent(false);
-        }
+        };
 
-        function updateStock(itemIndex, amount) {
-            let appData = initData(); let count = appData[currentAccount][currentCategory][itemIndex].count + amount;
-            if (count < 0) count = 0; appData[currentAccount][currentCategory][itemIndex].count = count;
+        window.updateStock = function(itemIndex, amount) {
+            let appData = initData(); 
+            // REVISI: Pembatasan maksimal limit sesuai Storage akun
+            let maxStorage = appData[currentAccount].storage || 1;
+            let count = appData[currentAccount][currentCategory][itemIndex].count + amount;
+            
+            if (count < 0) count = 0; 
+            if (count > maxStorage) count = maxStorage; 
+            
+            appData[currentAccount][currentCategory][itemIndex].count = count;
             saveData(appData); renderContent(false);
-        }
+        };
 
         function resetCurrentAccount() {
             const displayAccName = currentAccount.replace('_', ' ');
@@ -828,7 +853,6 @@
                 saveData(appData); renderContent(true);
             }
         }
-
 
         // =========================================
         // LOGIKA CALCULATOR
@@ -847,13 +871,11 @@
             { id: 'mammoth', name: "Mammoth", price: 2700000, rarity: 'mythical' },
             { id: 'gravity', name: "Gravity", price: 2500000, rarity: 'mythical' },
             { id: 'shadow', name: "Shadow", price: 2900000, rarity: 'mythical' },
-
             { id: 'lightning', name: "Lightning", price: 2100000, rarity: 'legendary' },
             { id: 'portal', name: "Portal", price: 1900000, rarity: 'legendary' },
             { id: 'buddha', name: "Buddha", price: 1200000, rarity: 'legendary' },
             { id: 'pain', name: "Pain", price: 2300000, rarity: 'legendary' },
             { id: 'blizzard', name: "Blizzard", price: 2400000, rarity: 'legendary' },
-
             { id: 'phoenix', name: "Phoenix", price: 1800000, rarity: 'epic' },
             { id: 'sound', name: "Sound", price: 1700000, rarity: 'epic' },
             { id: 'spider', name: "Spider", price: 1500000, rarity: 'epic' },
@@ -863,7 +885,6 @@
             { id: 'magma', name: "Magma", price: 960000, rarity: 'epic' },
             { id: 'ghost', name: "Ghost", price: 940000, rarity: 'epic' },
             { id: 'rubber', name: "Rubber", price: 750000, rarity: 'epic' },
-
             { id: 'light', name: "Light", price: 650000, rarity: 'uncommon' },
             { id: 'diamond', name: "Diamond", price: 600000, rarity: 'uncommon' },
             { id: 'eagle', name: "Eagle", price: 550000, rarity: 'uncommon' },
@@ -871,7 +892,6 @@
             { id: 'sand', name: "Sand", price: 420000, rarity: 'uncommon' },
             { id: 'ice', name: "Ice", price: 350000, rarity: 'uncommon' },
             { id: 'flame', name: "Flame", price: 250000, rarity: 'uncommon' },
-
             { id: 'spike', name: "Spike", price: 180000, rarity: 'common' },
             { id: 'smoke', name: "Smoke", price: 100000, rarity: 'common' },
             { id: 'bomb', name: "Bomb", price: 80000, rarity: 'common' },
@@ -925,30 +945,37 @@
 
         function closeModal() {
             const modal = document.getElementById('modal'); modal.classList.remove('show');
-            setTimeout(() => { modal.style.display = 'none'; }, 150); 
+            setTimeout(() => { modal.style.display = 'none'; }, 100); 
         }
         
         function closeModalOnOutsideClick(e) { if(e.target.id === 'modal') closeModal(); }
 
+        // REVISI: Pergerakan animasi Instan/Tanpa Timeout berlebihan
         function selectFruitWithAnim(fruit, element) {
             if (element.classList.contains('animate-pop-out')) return; 
             if (calcState[calcCurrentActiveSide].length < 4) {
                 element.classList.add('animate-pop-out');
-                setTimeout(() => {
-                    animatedSlot = { side: calcCurrentActiveSide, index: calcState[calcCurrentActiveSide].length };
-                    calcState[calcCurrentActiveSide].push(fruit); updateCalcUI(); 
-                    if (calcState[calcCurrentActiveSide].length === 4) closeModal();
-                    element.classList.remove('animate-pop-out');
-                }, 80);
+                
+                // Eksekusi langsung tanpa jeda untuk responsivitas maksimal
+                calcState[calcCurrentActiveSide].push(fruit); 
+                animatedSlot = { side: calcCurrentActiveSide, index: calcState[calcCurrentActiveSide].length - 1 };
+                
+                updateCalcUI(); 
+                
+                if (calcState[calcCurrentActiveSide].length === 4) closeModal();
+                
+                setTimeout(() => { element.classList.remove('animate-pop-out'); }, 40);
             } else { alert("Maksimal 4 buah dalam 1 meja!"); }
         }
 
         function removeFruitWithAnim(side, fruitObj, element) {
             element.classList.remove('animate-pop-in'); element.classList.add('animate-pop-out');
+            
+            // Eksekusi langsung tanpa delay panjang
             setTimeout(() => {
                 const idx = calcState[side].indexOf(fruitObj);
                 if (idx > -1) { calcState[side].splice(idx, 1); updateCalcUI(); }
-            }, 80);
+            }, 30);
         }
 
         function resetAllCalc() { calcState.you = []; calcState.them = []; updateCalcUI(); }
@@ -1006,9 +1033,6 @@
             }
         }
 
-        // =========================================
-        // JALANKAN SAAT WEB DIMUAT
-        // =========================================
         window.onload = function() {
             renderTabs();
             initCalc();
@@ -1017,7 +1041,6 @@
             switchView(savedView); 
         };
 
-        // KODE BARU: Daftarkan Service Worker agar bisa di-Install
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./sw.js').then(() => {
                 console.log('Service Worker Registered');
