@@ -8,7 +8,6 @@
     
     <style>
         :root {
-            /* Warna Tema Modern */
             --bg-color: #0f172a;
             --panel-bg: #1e293b;
             --text-main: #f8fafc;
@@ -20,12 +19,15 @@
             --btn-move-plus: #059669;
             --btn-move-minus: #dc2626;
             
-            /* Warna Rarity */
             --mythical-top: #ef4444; --mythical-mid: rgba(220, 38, 38, 0.5); --mythical-bot: #450a0a;
             --legendary-top: #d946ef; --legendary-mid: rgba(192, 38, 211, 0.5); --legendary-bot: #4a044e;
             --rare-top: #3b82f6; --rare-mid: rgba(37, 99, 235, 0.5); --rare-bot: #172554;
             --uncommon-top: #06b6d4; --uncommon-mid: rgba(8, 145, 178, 0.5); --uncommon-bot: #083344;
             --common-top: #94a3b8; --common-mid: rgba(100, 116, 139, 0.5); --common-bot: #0f172a;
+            
+            /* WARNA BARU: Special Gray & Special Gold */
+            --special-gray-top: #4b5563; --special-gray-mid: rgba(75, 85, 99, 0.5); --special-gray-bot: #1f2937;
+            --special-gold-top: #eab308; --special-gold-mid: rgba(234, 179, 8, 0.5); --special-gold-bot: #92400e;
         }
 
         body {
@@ -98,17 +100,20 @@
 
         .main-content { padding-top: 60px; }
 
-        /* =========================================
-           GLOBAL UTILITIES (SHARED)
-           ========================================= */
         .text-green { color: #10b981 !important; text-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
         .text-red { color: #ef4444 !important; text-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
+        
+        .text-green-glow {
+            color: #10b981 !important;
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.8), 0 0 20px rgba(16, 185, 129, 0.5) !important;
+        }
         
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 5px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
 
+        /* KUMPULAN WARNA BACKGROUND RARITY KARTU */
         .rarity-mythical .card-header, .mythical-bg .card-header { background-color: var(--mythical-top); }
         .rarity-mythical .card-body, .mythical-bg .card-body { background: linear-gradient(to bottom, var(--mythical-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
         .rarity-mythical .card-footer, .mythical-bg .card-footer { background-color: var(--mythical-bot); }
@@ -128,6 +133,15 @@
         .rarity-common .card-header, .common-bg .card-header { background-color: var(--common-top); }
         .rarity-common .card-body, .common-bg .card-body { background: linear-gradient(to bottom, var(--common-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
         .rarity-common .card-footer, .common-bg .card-footer { background-color: var(--common-bot); }
+
+        /* REVISI WARNA BACKGROUND BARU */
+        .rarity-special-gray .card-header, .special-gray-bg .card-header { background-color: var(--special-gray-top); }
+        .rarity-special-gray .card-body, .special-gray-bg .card-body { background: linear-gradient(to bottom, var(--special-gray-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
+        .rarity-special-gray .card-footer, .special-gray-bg .card-footer { background-color: var(--special-gray-bot); }
+
+        .rarity-special-gold .card-header, .special-gold-bg .card-header { background-color: var(--special-gold-top); }
+        .rarity-special-gold .card-body, .special-gold-bg .card-body { background: linear-gradient(to bottom, var(--special-gold-mid), transparent), url('assets/Fruit-BG.png'); background-size: cover; }
+        .rarity-special-gold .card-footer, .special-gold-bg .card-footer { background-color: var(--special-gold-bot); }
 
 
         /* =========================================
@@ -179,15 +193,32 @@
 
         .item-card { display: flex; flex-direction: column; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); background-color: var(--panel-bg); box-shadow: 0 6px 12px rgba(0,0,0,0.4); position: relative; transition: 0.2s; }
         .item-card:hover { transform: translateY(-3px); }
+        
+        .item-card.stock-zero .card-body img { opacity: 0.35; filter: grayscale(80%); }
 
         .btn-move { position: absolute; top: -8px; right: -8px; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--bg-color); z-index: 10; display: flex; justify-content: center; align-items: center; cursor: pointer; color: white; font-weight: 800; font-size: 16px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); transition: 0.15s; }
         .btn-move:active { transform: scale(0.8); }
         .section-selected .btn-move { background-color: var(--btn-move-minus); }
         .section-unselected .btn-move { background-color: var(--btn-move-plus); }
 
-        .item-card .card-header { color: white; font-size: 9px; font-weight: 800; text-align: center; padding: 5px 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); border-bottom: 1px solid rgba(0,0,0,0.3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 15px; border-radius: 10px 10px 0 0; }
+        .item-card .card-header { 
+            color: #ffffff;
+            font-size: 12.5px; 
+            font-weight: 900; 
+            text-align: center; 
+            padding: 5px 0; 
+            text-shadow: 1px 1px 3px rgba(0,0,0,1);
+            border-bottom: 1px solid rgba(0,0,0,0.4); 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            padding-right: 15px; 
+            border-radius: 10px 10px 0 0; 
+        }
+        
         .item-card .card-body { position: relative; background-size: cover; background-position: center; padding: 8px; display: flex; justify-content: center; align-items: center; aspect-ratio: 1 / 1; }
         .item-card .fruit-img { max-width: 95%; max-height: 95%; object-fit: contain; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.8)); transition: 0.2s;}
+        .item-card:hover .fruit-img { transform: scale(1.08); }
         .item-card .card-footer { display: flex; justify-content: space-between; align-items: center; padding: 6px; border-top: 1px solid rgba(0,0,0,0.5); border-radius: 0 0 10px 10px; }
 
         .btn-stock { width: 24px; height: 24px; border-radius: 6px; border: none; color: white; font-size: 16px; font-weight: 800; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.3); transition: 0.1s; }
@@ -231,8 +262,16 @@
         
         .slot .card-header { flex-shrink: 0; color: white; font-size: 11px; font-weight: 800; text-align: center; padding: 4px 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); border-bottom: 1px solid rgba(0,0,0,0.3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; letter-spacing: 0.5px; box-sizing: border-box; }
         .slot .card-body { position: relative; flex: 1; width: 100%; min-height: 0; display: flex; justify-content: center; align-items: center; padding: 5px; box-sizing: border-box; }
-        .slot .fruit-img { max-width: 90%; max-height: 90%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.8)); transition: 0.2s; }
         .slot .card-footer { flex-shrink: 0; width: 100%; text-align: center; padding: 4px; border-top: 1px solid rgba(0,0,0,0.5); font-size: 12px; font-weight: 800; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); box-sizing: border-box; }
+
+        #view-calculator .slot .fruit-img,
+        .modal-body .slot .fruit-img {
+            max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.8)); transition: 0.2s; transform: scale(1.05);
+        }
+        #view-calculator .slot.slot-filled:hover .fruit-img,
+        .modal-body .slot.slot-filled:hover .fruit-img {
+            transform: scale(1.15);
+        }
 
         @keyframes popIn { 0% { opacity: 0; transform: scale(0.7); } 80% { transform: scale(1.05); } 100% { opacity: 1; transform: scale(1); } }
         .animate-pop-in { animation: popIn 0.12s ease-out forwards; }
@@ -261,7 +300,6 @@
         .modal-close { cursor: pointer; background: rgba(239, 68, 68, 0.2); color: #ef4444; border: none; width: 32px; height: 32px; border-radius: 50%; font-weight: bold; font-size: 16px; display: flex; justify-content: center; align-items: center; transition: 0.2s; }
         .modal-body { padding: 15px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; align-items: start; }
 
-
         /* =========================================
            RESPONSIF MOBILE (KUNCI LAYAR KALKULATOR)
            ========================================= */
@@ -278,34 +316,12 @@
                 justify-content: flex-start;
             }
             
-            .calculator-container { 
-                padding: 0; 
-                height: 100%; 
-                width: 100%;
-                display: flex; 
-                flex-direction: column; 
-            }
-            
-            .main-layout { 
-                display: grid; 
-                grid-template-columns: 1fr 1fr; 
-                grid-template-rows: auto auto; 
-                gap: 10px 8px; 
-                width: 100%; 
-                height: 100%;
-            }
+            .calculator-container { padding: 0; height: 100%; width: 100%; display: flex; flex-direction: column; }
+            .main-layout { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 10px 8px; width: 100%; height: 100%; }
             
             #side-you { grid-column: 1; grid-row: 1; width: 100%; order: unset; }
             #side-them { grid-column: 2; grid-row: 1; width: 100%; order: unset; }
-            .center-area { 
-                grid-column: 1 / 3; 
-                grid-row: 2; 
-                width: 100%; 
-                margin-top: 0; 
-                order: unset; 
-                justify-content: flex-start;
-                padding-top: 0;
-            }
+            .center-area { grid-column: 1 / 3; grid-row: 2; width: 100%; margin-top: 0; order: unset; justify-content: flex-start; padding-top: 0; }
             
             .side { padding: 8px; border-radius: 12px; } 
             .side h2 { font-size: 13px; margin: 0 0 6px 0; padding-bottom: 4px; }
@@ -317,7 +333,11 @@
             .slot .card-header { font-size: 8px; padding: 2px 0; border-radius: 8px 8px 0 0;}
             .slot .card-footer { font-size: 9px; padding: 2px; border-radius: 0 0 8px 8px;}
             .slot .card-body { padding: 4px; }
-            .slot .fruit-img { max-width: 85%; max-height: 85%; }
+            
+            #view-calculator .slot .fruit-img,
+            .modal-body .slot .fruit-img { max-width: 100%; max-height: 100%; transform: scale(1.0); }
+            #view-calculator .slot.slot-filled:hover .fruit-img,
+            .modal-body .slot.slot-filled:hover .fruit-img { transform: scale(1.1); }
             
             .totals-box { margin-top: 8px; }
             .total-row { font-size: 10px; padding: 6px; flex-direction: column; text-align: center; gap: 2px;}
@@ -436,6 +456,108 @@
 
     <script>
         // =========================================
+        // LOGIKA FORMAT HARGA
+        // =========================================
+        function formatVal(num) { return num.toLocaleString('id-ID'); }
+        function formatShort(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1).replace('.0', '') + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1).replace('.0', '') + 'K';
+            return num;
+        }
+
+        // =========================================
+        // DAFTAR ITEM 
+        // =========================================
+        const orderedFruits = [
+            // Mythical
+            {name: "West Dragon", price: 15000000, img: "WestDragon", rarity: "mythical"},
+            {name: "East Dragon", price: 15000000, img: "EastDragon", rarity: "mythical"},
+            {name: "Control", price: 9000000, rarity: "mythical"},
+            {name: "Kitsune", price: 8000000, rarity: "mythical"},
+            {name: "Tiger", price: 5000000, rarity: "mythical"},
+            {name: "Yeti", price: 5000000, rarity: "mythical"},
+            {name: "Gas", price: 3200000, rarity: "mythical"},
+            {name: "Dough", price: 2800000, rarity: "mythical"},
+            {name: "T-Rex", price: 2700000, img: "T-Rex", rarity: "mythical"},
+            {name: "Venom", price: 3000000, rarity: "mythical"},
+            {name: "Spirit", price: 3400000, rarity: "mythical"},
+            {name: "Mammoth", price: 2700000, rarity: "mythical"},
+            {name: "Gravity", price: 2500000, rarity: "mythical"},
+            {name: "Shadow", price: 2900000, rarity: "mythical"},
+            
+            // Legendary
+            {name: "Lightning", price: 2100000, rarity: "legendary"},
+            {name: "Portal", price: 1900000, rarity: "legendary"},
+            {name: "Buddha", price: 1200000, rarity: "legendary"},
+            {name: "Pain", price: 2300000, rarity: "legendary"},
+            {name: "Blizzard", price: 2400000, rarity: "legendary"},
+            {name: "Phoenix", price: 1800000, rarity: "legendary"},
+            {name: "Sound", price: 1700000, rarity: "legendary"},
+            {name: "Spider", price: 1500000, rarity: "legendary"},
+            {name: "Creation", price: 1400000, rarity: "legendary"},
+            {name: "Love", price: 1300000, rarity: "legendary"},
+            {name: "Quake", price: 1000000, rarity: "legendary"},
+            
+            // Rare
+            {name: "Magma", price: 960000, rarity: "rare"},
+            {name: "Ghost", price: 940000, rarity: "rare"},
+            {name: "Rubber", price: 750000, rarity: "rare"},
+            {name: "Light", price: 650000, rarity: "rare"},
+            
+            // Uncommon
+            {name: "Diamond", price: 600000, rarity: "uncommon"},
+            {name: "Eagle", price: 550000, rarity: "uncommon"},
+            {name: "Dark", price: 500000, rarity: "uncommon"},
+            {name: "Sand", price: 420000, rarity: "uncommon"},
+            {name: "Ice", price: 350000, rarity: "uncommon"},
+            {name: "Flame", price: 250000, rarity: "uncommon"},
+            
+            // Common
+            {name: "Spike", price: 180000, rarity: "common"},
+            {name: "Smoke", price: 100000, rarity: "common"},
+            {name: "Bomb", price: 80000, rarity: "common"},
+            {name: "Spring", price: 60000, rarity: "common"},
+            {name: "Blade", price: 30000, rarity: "common"},
+            {name: "Spin", price: 7500, rarity: "common"},
+            {name: "Rocket", price: 5000, rarity: "common"},
+            {name: "Celebration", price: 0, img: "celebration", rarity: "common"} 
+        ];
+
+        // REVISI: Rarity untuk Eclipse, Tokens, Parrot diubah menjadi special-gray
+        const orderedSkins = [
+            {name: "Galaxy Empyrean Kitsune", rarity: "mythical"}, {name: "Ember West Dragon", rarity: "mythical"}, {name: "Crimson Kitsune", rarity: "mythical"},
+            {name: "Purple Lightning", rarity: "legendary"}, {name: "Yellow Lightning", rarity: "legendary"}, {name: "Red Lightning", rarity: "legendary"},
+            {name: "Super Spirit Pain", rarity: "legendary"}, {name: "Divine Portal", rarity: "legendary"}, {name: "Werewolf", rarity: "legendary"},
+            {name: "Fiend Yeti", rarity: "mythical"}, {name: "Sadness Pain", rarity: "legendary"},
+            {name: "Azura Bomb", rarity: "common"}, {name: "Thermite Bomb", rarity: "common"}, {name: "Nuclear Bomb", rarity: "common"},
+            {name: "Celestial Pain", rarity: "legendary"}, {name: "Frustration Pain", rarity: "legendary"},
+            {name: "Eagle Matrix", rarity: "uncommon"}, {name: "Rose Quartz Diamond", rarity: "uncommon"}, {name: "Emerald Diamond", rarity: "uncommon"}, {name: "Topaz Diamond", rarity: "uncommon"}, {name: "Eagle Requiem", rarity: "uncommon"}, {name: "Ruby Diamond", rarity: "uncommon"}, {name: "Eagle Glacier", rarity: "uncommon"},
+            {name: "Eclipse", rarity: "special-gray"}, {name: "Permanent Dragon Token", rarity: "special-gray"}, {name: "Dragon Token", rarity: "special-gray"}, {name: "Parrot", rarity: "special-gray"}
+        ];
+
+        // REVISI: Rarity untuk seluruh Gamepasses diubah menjadi special-gold
+        const orderedGamepasses = [
+            {name: "Fruit Notifier", rarity: "special-gold"}, {name: "Mythical Scrolls", rarity: "special-gold"}, {name: "Dark Blade", rarity: "special-gold"},
+            {name: "Legendary Scrolls", rarity: "special-gold"}, {name: "2x Mastery", rarity: "special-gold"}, {name: "2x Money", rarity: "special-gold"}, 
+            {name: "+1 Fruit Storage", rarity: "special-gold"}, {name: "2x Boss Drops", rarity: "special-gold"}, {name: "Fast Boats", rarity: "special-gold"}
+        ];
+
+        const masterDict = [...orderedFruits, ...orderedSkins, ...orderedGamepasses];
+
+        const generateList = (sourceArray) => sourceArray.map(f => ({ name: f.name, count: 0, selected: true }));
+
+        const defaultData = {
+            "Royal_D": { info: "Storage 16", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) },
+            "Clone_2": { info: "Storage 8", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) },
+            "Clone_3": { info: "Storage 8", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) },
+            "Clone_4": { info: "Storage 4", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) }
+        };
+
+        // Menggunakan Database V10 agar Rarity baru ter-apply sempurna
+        let currentAccount = localStorage.getItem('bloxCurrentTab_v10') || "Royal_D";
+        let currentCategory = localStorage.getItem('bloxCurrentCat_v10') || "fruits";
+
+        // =========================================
         // LOGIKA DASHBOARD (NAVIGASI)
         // =========================================
         function toggleSidebar(forceOpen) {
@@ -457,7 +579,6 @@
             const menuCalc = document.getElementById('menu-calc');
             const title = document.getElementById('app-title');
 
-            // REVISI BUG: Menyimpan halaman yang sedang aktif agar tidak reset saat direfresh
             localStorage.setItem('bloxAppView', viewName);
 
             if(viewName === 'stock') {
@@ -476,58 +597,18 @@
                 title.innerText = "Calculator Pro";
             }
             toggleSidebar(false);
-            window.scrollTo(0, 0);
         }
 
         // =========================================
         // LOGIKA STOCK INVENTORY
         // =========================================
-        const orderedFruits = [
-            {name: "East Dragon", rarity: "mythical"}, {name: "West Dragon", rarity: "mythical"}, {name: "Control", rarity: "mythical"}, {name: "Kitsune", rarity: "mythical"}, {name: "Tiger", rarity: "mythical"}, {name: "Yeti", rarity: "mythical"}, {name: "Spirit", rarity: "mythical"}, {name: "Gas", rarity: "mythical"}, {name: "Venom", rarity: "mythical"}, {name: "Shadow", rarity: "mythical"}, {name: "Dough", rarity: "mythical"}, {name: "T-Rex", rarity: "mythical"}, {name: "Mammoth", rarity: "mythical"}, {name: "Gravity", rarity: "mythical"},
-            {name: "Blizzard", rarity: "legendary"}, {name: "Pain", rarity: "legendary"}, {name: "Lightning", rarity: "legendary"}, {name: "Portal", rarity: "legendary"}, {name: "Phoenix", rarity: "legendary"}, {name: "Sound", rarity: "legendary"}, {name: "Spider", rarity: "legendary"}, {name: "Creation", rarity: "legendary"}, {name: "Love", rarity: "legendary"}, {name: "Buddha", rarity: "legendary"}, {name: "Quake", rarity: "legendary"},
-            {name: "Magma", rarity: "rare"}, {name: "Ghost", rarity: "rare"}, {name: "Rubber", rarity: "rare"}, {name: "Light", rarity: "rare"},
-            {name: "Diamond", rarity: "uncommon"}, {name: "Eagle", rarity: "uncommon"}, {name: "Dark", rarity: "uncommon"}, {name: "Sand", rarity: "uncommon"}, {name: "Ice", rarity: "uncommon"}, {name: "Flame", rarity: "uncommon"},
-            {name: "Spike", rarity: "common"}, {name: "Smoke", rarity: "common"}, {name: "Bomb", rarity: "common"}, {name: "Spring", rarity: "common"}, {name: "Blade", rarity: "common"}, {name: "Spin", rarity: "common"}, {name: "Rocket", rarity: "common"}
-        ];
-
-        const orderedSkins = [
-            {name: "Galaxy Empyrean Kitsune", rarity: "mythical"}, {name: "Ember West Dragon", rarity: "mythical"}, {name: "Crimson Kitsune", rarity: "mythical"},
-            {name: "Purple Lightning", rarity: "legendary"}, {name: "Yellow Lightning", rarity: "legendary"}, {name: "Red Lightning", rarity: "legendary"},
-            {name: "Super Spirit Pain", rarity: "legendary"}, {name: "Divine Portal", rarity: "legendary"}, {name: "Werewolf", rarity: "legendary"},
-            {name: "Fiend Yeti", rarity: "mythical"}, {name: "Sadness Pain", rarity: "legendary"},
-            {name: "Azura Bomb", rarity: "common"}, {name: "Thermite Bomb", rarity: "common"}, {name: "Nuclear Bomb", rarity: "common"},
-            {name: "Celestial Pain", rarity: "legendary"}, {name: "Frustration Pain", rarity: "legendary"},
-            {name: "Eagle Matrix", rarity: "uncommon"}, {name: "Rose Quartz Diamond", rarity: "uncommon"}, {name: "Emerald Diamond", rarity: "uncommon"}, {name: "Topaz Diamond", rarity: "uncommon"}, {name: "Eagle Requiem", rarity: "uncommon"}, {name: "Ruby Diamond", rarity: "uncommon"}, {name: "Eagle Glacier", rarity: "uncommon"},
-            {name: "Eclipse", rarity: "legendary"}, {name: "Permanent Dragon Token", rarity: "mythical"}, {name: "Dragon Token", rarity: "mythical"}, {name: "Parrot", rarity: "legendary"}
-        ];
-
-        const orderedGamepasses = [
-            {name: "Fruit Notifier", rarity: "mythical"}, {name: "Mythical Scrolls", rarity: "mythical"}, {name: "Dark Blade", rarity: "mythical"},
-            {name: "Legendary Scrolls", rarity: "legendary"}, {name: "2x Mastery", rarity: "legendary"}, {name: "2x Money", rarity: "legendary"}, 
-            {name: "+1 Fruit Storage", rarity: "legendary"}, {name: "2x Boss Drops", rarity: "legendary"}, {name: "Fast Boats", rarity: "legendary"}
-        ];
-
-        const masterDict = [...orderedFruits, ...orderedSkins, ...orderedGamepasses];
-
-        const generateList = (sourceArray) => sourceArray.map(f => ({ name: f.name, count: 0, selected: true }));
-
-        const defaultData = {
-            "Royal_D": { info: "Storage 16", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) },
-            "Clone_2": { info: "Storage 8", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) },
-            "Clone_3": { info: "Storage 8", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) },
-            "Clone_4": { info: "Storage 4", slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) }
-        };
-
-        let currentAccount = localStorage.getItem('bloxCurrentTab_v8') || "Royal_D";
-        let currentCategory = localStorage.getItem('bloxCurrentCat_v8') || "fruits";
-
         function initData() {
-            const savedData = localStorage.getItem('bloxStockData_v8'); 
+            const savedData = localStorage.getItem('bloxStockData_v10'); 
             if (savedData) return JSON.parse(savedData);
             saveData(defaultData); return JSON.parse(JSON.stringify(defaultData));
         }
 
-        function saveData(data) { localStorage.setItem('bloxStockData_v8', JSON.stringify(data)); }
+        function saveData(data) { localStorage.setItem('bloxStockData_v10', JSON.stringify(data)); }
 
         function renderTabs() {
             let appData = initData();
@@ -540,7 +621,7 @@
                 btn.className = `tab-btn ${accName === currentAccount ? 'active' : ''}`;
                 btn.innerText = accName.replace('_', ' ');
                 btn.onclick = () => {
-                    currentAccount = accName; localStorage.setItem('bloxCurrentTab_v8', currentAccount);
+                    currentAccount = accName; localStorage.setItem('bloxCurrentTab_v10', currentAccount);
                     renderTabs(); renderContent(true); 
                 };
                 tabContainer.appendChild(btn);
@@ -553,7 +634,7 @@
             });
         }
 
-        function changeCategory(cat) { currentCategory = cat; localStorage.setItem('bloxCurrentCat_v8', currentCategory); renderTabs(); renderContent(true); }
+        function changeCategory(cat) { currentCategory = cat; localStorage.setItem('bloxCurrentCat_v10', currentCategory); renderTabs(); renderContent(true); }
 
         function getRarityClass(itemName) {
             const item = masterDict.find(f => f.name === itemName);
@@ -565,6 +646,7 @@
             let appData = initData(); const acc = appData[currentAccount];
 
             if (triggerAnimation) {
+                window.scrollTo(0, 0); 
                 const contentArea = document.getElementById('content-area');
                 if(contentArea) {
                     contentArea.classList.remove('animate-content'); 
@@ -589,17 +671,67 @@
             selectedGrid.innerHTML = ''; unselectedGrid.innerHTML = '';
             let selectedCount = 0; let unselectedCount = 0;
 
+            let maxStocks = { legendary: 0, rare: 0, uncommon: 0, common: 0 };
+            
+            // FUNGSI HELPER UNTUK PENGECUALIAN HIGH SCORE
+            const isExcludedFromHighScore = (itemName, rarity) => {
+                // REVISI: Hanya Fruits yang masuk system angka hijau
+                if (currentCategory !== 'fruits') return true;
+                
+                if (rarity === 'mythical') return true;
+                if (['Blizzard', 'Portal', 'Buddha', 'Lightning', 'Celebration', 'Pain'].includes(itemName)) return true;
+                if (rarity === 'common' && itemName !== 'Spike') return true;
+                return false;
+            };
+            
+            acc[currentCategory].forEach(item => {
+                const fruitDef = masterDict.find(f => f.name === item.name);
+                if (!fruitDef) return;
+                const rarity = fruitDef.rarity.toLowerCase();
+                
+                if (isExcludedFromHighScore(item.name, rarity)) return;
+                
+                if (maxStocks[rarity] !== undefined && item.count > maxStocks[rarity]) {
+                    maxStocks[rarity] = item.count;
+                }
+            });
+
             acc[currentCategory].forEach((itemData, index) => {
-                const imgName = itemData.name.replace(/\s+/g, '');
+                const fruitDef = masterDict.find(f => f.name === itemData.name);
+                const rarityClass = getRarityClass(itemData.name);
+                const rarity = fruitDef ? fruitDef.rarity.toLowerCase() : 'common';
+                
+                let imgName = itemData.name.replace(/\s+/g, '');
+                if (fruitDef && fruitDef.img) {
+                    imgName = fruitDef.img;
+                }
+
+                let displayName = itemData.name;
+                if (currentCategory === 'fruits') {
+                    if (itemData.name === "Celebration") {
+                        displayName = "Skin";
+                    } else if (fruitDef && fruitDef.price > 0) {
+                        displayName = formatShort(fruitDef.price);
+                    }
+                }
+
+                let isMax = false;
+                if (!isExcludedFromHighScore(itemData.name, rarity) && itemData.count > 0 && itemData.count === maxStocks[rarity]) {
+                    isMax = true;
+                }
+                const stockCountClass = isMax ? 'stock-count text-green-glow' : 'stock-count';
+
+                const zeroClass = itemData.count === 0 ? 'stock-zero' : '';
+                
                 const card = document.createElement('div');
-                card.className = `item-card ${getRarityClass(itemData.name)}`;
+                card.className = `item-card ${rarityClass} ${zeroClass}`;
                 
                 const cardInner = `
-                    <div class="card-header" title="${itemData.name}">${itemData.name}</div>
+                    <div class="card-header" title="${itemData.name}">${displayName}</div>
                     <div class="card-body"><img src="assets/${imgName}.png" alt="${itemData.name}" loading="lazy" class="fruit-img"></div>
                     <div class="card-footer">
                         <button class="btn-stock btn-minus" onclick="updateStock(${index}, -1)">-</button>
-                        <div class="stock-count">${itemData.count}</div>
+                        <div class="${stockCountClass}">${itemData.count}</div>
                         <button class="btn-stock btn-plus" onclick="updateStock(${index}, 1)">+</button>
                     </div>
                 `;
@@ -618,9 +750,7 @@
             document.getElementById('selected-count').innerText = selectedCount; document.getElementById('unselected-count').innerText = unselectedCount;
             document.getElementById('reset-btn').innerText = `⚠️ Reset ${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)} di Akun Ini`;
 
-            if (triggerAnimation) {
-                window.scrollTo(0, 0);
-            } else {
+            if (!triggerAnimation) {
                 window.scrollTo(0, currentWindowScroll);
             }
         }
@@ -659,70 +789,66 @@
         // LOGIKA CALCULATOR
         // =========================================
         const calcFruitData = [
-            // REVISI BUG: Menghapus East/West, dikembalikan jadi 1 Dragon saja di Calculator
-            { id: 'dragon', name: "Dragon", price: 15000000, img: "assets/Dragon.png", rarity: 'Mythical' },
-            { id: 'control', name: "Control", price: 9000000, img: "assets/Control.png", rarity: 'Mythical' },
-            { id: 'kitsune', name: "Kitsune", price: 8000000, img: "assets/Kitsune.png", rarity: 'Mythical' },
-            { id: 'tiger', name: "Tiger", price: 5000000, img: "assets/Tiger.png", rarity: 'Mythical' }, 
-            { id: 'yeti', name: "Yeti", price: 5000000, img: "assets/Yeti.png", rarity: 'Mythical' }, 
-            { id: 'spirit', name: "Spirit", price: 3400000, img: "assets/Spirit.png", rarity: 'Mythical' }, 
-            { id: 'gas', name: "Gas", price: 3200000, img: "assets/Gas.png", rarity: 'Mythical' }, 
-            { id: 'venom', name: "Venom", price: 3000000, img: "assets/Venom.png", rarity: 'Mythical' },
-            { id: 'shadow', name: "Shadow", price: 2900000, img: "assets/Shadow.png", rarity: 'Mythical' },
-            { id: 'dough', name: "Dough", price: 2800000, img: "assets/Dough.png", rarity: 'Mythical' },
-            { id: 'trex', name: "T-Rex", price: 2700000, img: "assets/T-Rex.png", rarity: 'Mythical' }, 
-            { id: 'mammoth', name: "Mammoth", price: 2700000, img: "assets/Mammoth.png", rarity: 'Mythical' }, 
-            { id: 'gravity', name: "Gravity", price: 2500000, img: "assets/Gravity.png", rarity: 'Mythical' },
+            { id: 'dragon', name: "Dragon", price: 15000000, img: "Dragon", rarity: 'mythical' },
+            { id: 'control', name: "Control", price: 9000000, rarity: 'mythical' },
+            { id: 'kitsune', name: "Kitsune", price: 8000000, rarity: 'mythical' },
+            { id: 'tiger', name: "Tiger", price: 5000000, rarity: 'mythical' },
+            { id: 'yeti', name: "Yeti", price: 5000000, rarity: 'mythical' },
+            { id: 'gas', name: "Gas", price: 3200000, rarity: 'mythical' },
+            { id: 'dough', name: "Dough", price: 2800000, rarity: 'mythical' },
+            { id: 'trex', name: "T-Rex", price: 2700000, img: "T-Rex", rarity: 'mythical' },
+            { id: 'venom', name: "Venom", price: 3000000, rarity: 'mythical' },
+            { id: 'spirit', name: "Spirit", price: 3400000, rarity: 'mythical' },
+            { id: 'mammoth', name: "Mammoth", price: 2700000, rarity: 'mythical' },
+            { id: 'gravity', name: "Gravity", price: 2500000, rarity: 'mythical' },
+            { id: 'shadow', name: "Shadow", price: 2900000, rarity: 'mythical' },
 
-            { id: 'blizzard', name: "Blizzard", price: 2400000, img: "assets/Blizzard.png", rarity: 'Legendary' },
-            { id: 'pain', name: "Pain", price: 2300000, img: "assets/Pain.png", rarity: 'Legendary' }, 
-            { id: 'rumble', name: "Rumble", price: 2100000, img: "assets/Rumble.png", rarity: 'Legendary' },
-            { id: 'portal', name: "Portal", price: 1900000, img: "assets/Portal.png", rarity: 'Legendary' }, 
-            { id: 'phoenix', name: "Phoenix", price: 1800000, img: "assets/Phoenix.png", rarity: 'Legendary' },
-            { id: 'sound', name: "Sound", price: 1700000, img: "assets/Sound.png", rarity: 'Legendary' }, 
-            { id: 'spider', name: "Spider", price: 1500000, img: "assets/Spider.png", rarity: 'Legendary' }, 
-            { id: 'creation', name: "Creation", price: 1400000, img: "assets/Creation.png", rarity: 'Legendary' }, 
-            { id: 'love', name: "Love", price: 1300000, img: "assets/Love.png", rarity: 'Legendary' },
-            { id: 'buddha', name: "Buddha", price: 1200000, img: "assets/Buddha.png", rarity: 'Legendary' },
-            { id: 'quake', name: "Quake", price: 1000000, img: "assets/Quake.png", rarity: 'Legendary' },
+            { id: 'lightning', name: "Lightning", price: 2100000, rarity: 'legendary' },
+            { id: 'portal', name: "Portal", price: 1900000, rarity: 'legendary' },
+            { id: 'buddha', name: "Buddha", price: 1200000, rarity: 'legendary' },
+            { id: 'pain', name: "Pain", price: 2300000, rarity: 'legendary' },
+            { id: 'blizzard', name: "Blizzard", price: 2400000, rarity: 'legendary' },
+            { id: 'phoenix', name: "Phoenix", price: 1800000, rarity: 'legendary' },
+            { id: 'sound', name: "Sound", price: 1700000, rarity: 'legendary' },
+            { id: 'spider', name: "Spider", price: 1500000, rarity: 'legendary' },
+            { id: 'creation', name: "Creation", price: 1400000, rarity: 'legendary' },
+            { id: 'love', name: "Love", price: 1300000, rarity: 'legendary' },
+            { id: 'quake', name: "Quake", price: 1000000, rarity: 'legendary' },
 
-            { id: 'magma', name: "Magma", price: 960000, img: "assets/Magma.png", rarity: 'Rare' },
-            { id: 'ghost', name: "Ghost", price: 940000, img: "assets/Ghost.png", rarity: 'Rare' }, 
-            { id: 'rubber', name: "Rubber", price: 750000, img: "assets/Rubber.png", rarity: 'Rare' },
-            { id: 'light', name: "Light", price: 650000, img: "assets/Light.png", rarity: 'Rare' },
+            { id: 'magma', name: "Magma", price: 960000, rarity: 'rare' },
+            { id: 'ghost', name: "Ghost", price: 940000, rarity: 'rare' },
+            { id: 'rubber', name: "Rubber", price: 750000, rarity: 'rare' },
+            { id: 'light', name: "Light", price: 650000, rarity: 'rare' },
 
-            { id: 'diamond', name: "Diamond", price: 600000, img: "assets/Diamond.png", rarity: 'Uncommon' },
-            { id: 'eagle', name: "Eagle", price: 550000, img: "assets/Eagle.png", rarity: 'Uncommon' }, 
-            { id: 'dark', name: "Dark", price: 500000, img: "assets/Dark.png", rarity: 'Uncommon' },
-            { id: 'sand', name: "Sand", price: 420000, img: "assets/Sand.png", rarity: 'Uncommon' },
-            { id: 'ice', name: "Ice", price: 350000, img: "assets/Ice.png", rarity: 'Uncommon' },
-            { id: 'flame', name: "Flame", price: 250000, img: "assets/Flame.png", rarity: 'Uncommon' },
+            { id: 'diamond', name: "Diamond", price: 600000, rarity: 'uncommon' },
+            { id: 'eagle', name: "Eagle", price: 550000, rarity: 'uncommon' },
+            { id: 'dark', name: "Dark", price: 500000, rarity: 'uncommon' },
+            { id: 'sand', name: "Sand", price: 420000, rarity: 'uncommon' },
+            { id: 'ice', name: "Ice", price: 350000, rarity: 'uncommon' },
+            { id: 'flame', name: "Flame", price: 250000, rarity: 'uncommon' },
 
-            { id: 'spike', name: "Spike", price: 180000, img: "assets/Spike.png", rarity: 'Common' },
-            { id: 'smoke', name: "Smoke", price: 100000, img: "assets/Smoke.png", rarity: 'Common' },
-            { id: 'bomb', name: "Bomb", price: 80000, img: "assets/Bomb.png", rarity: 'Common' },
-            { id: 'spring', name: "Spring", price: 60000, img: "assets/Spring.png", rarity: 'Common' },
-            { id: 'blade', name: "Blade", price: 30000, img: "assets/Blade.png", rarity: 'Common' }, 
-            { id: 'spin', name: "Spin", price: 7500, img: "assets/Spin.png", rarity: 'Common' },
-            { id: 'rocket', name: "Rocket", price: 5000, img: "assets/Rocket.png", rarity: 'Common' }
+            { id: 'spike', name: "Spike", price: 180000, rarity: 'common' },
+            { id: 'smoke', name: "Smoke", price: 100000, rarity: 'common' },
+            { id: 'bomb', name: "Bomb", price: 80000, rarity: 'common' },
+            { id: 'spring', name: "Spring", price: 60000, rarity: 'common' },
+            { id: 'blade', name: "Blade", price: 30000, rarity: 'common' },
+            { id: 'spin', name: "Spin", price: 7500, rarity: 'common' },
+            { id: 'rocket', name: "Rocket", price: 5000, rarity: 'common' },
+            { id: 'celebration', name: "Celebration", price: 0, img: "celebration", rarity: 'common' }
         ];
 
         let calcState = { you: [], them: [] };
         let calcCurrentActiveSide = '';
         let animatedSlot = { side: null, index: null };
 
-        function formatVal(num) { return num.toLocaleString('id-ID'); }
-        function formatShort(num) {
-            if (num >= 1000000) return (num / 1000000).toFixed(1).replace('.0', '') + 'M';
-            if (num >= 1000) return (num / 1000).toFixed(1).replace('.0', '') + 'k';
-            return num;
-        }
-
         function getCalcRarityClass(rarity) {
             switch(rarity) {
-                case 'Mythical': return 'mythical-bg'; case 'Legendary': return 'legendary-bg';
-                case 'Rare': return 'rare-bg'; case 'Uncommon': return 'uncommon-bg';
-                case 'Common': return 'common-bg'; default: return '';
+                case 'mythical': return 'mythical-bg'; case 'legendary': return 'legendary-bg';
+                case 'rare': return 'rare-bg'; case 'uncommon': return 'uncommon-bg';
+                case 'common': return 'common-bg'; 
+                case 'special-gold': return 'special-gold-bg';
+                case 'special-gray': return 'special-gray-bg';
+                default: return '';
             }
         }
 
@@ -733,9 +859,12 @@
                 const btn = document.createElement('div');
                 btn.className = `slot slot-filled ${getCalcRarityClass(fruit.rarity)}`;
                 btn.onclick = function() { selectFruitWithAnim(fruit, this); };
+                
+                let imgName = fruit.img || fruit.name.replace(/\s+/g, '');
+                
                 btn.innerHTML = `
                     <div class="card-header" title="${fruit.name}">${fruit.name}</div>
-                    <div class="card-body"><img src="${fruit.img}" alt="${fruit.name}" loading="lazy" class="fruit-img"></div>
+                    <div class="card-body"><img src="assets/${imgName}.png" alt="${fruit.name}" loading="lazy" class="fruit-img"></div>
                     <div class="card-footer">${formatShort(fruit.price)}</div>
                 `;
                 modalList.appendChild(btn);
@@ -786,9 +915,12 @@
                     const fruit = calcState[side][i]; totalBeli += fruit.price;
                     slotDiv.className = `slot slot-filled ${getCalcRarityClass(fruit.rarity)}`;
                     slotDiv.onclick = function() { removeFruitWithAnim(side, fruit, this); }; 
+                    
+                    let imgName = fruit.img || fruit.name.replace(/\s+/g, '');
+                    
                     slotDiv.innerHTML = `
                         <div class="card-header">${fruit.name}</div>
-                        <div class="card-body"><img src="${fruit.img}" alt="${fruit.name}" class="fruit-img"></div>
+                        <div class="card-body"><img src="assets/${imgName}.png" alt="${fruit.name}" class="fruit-img"></div>
                         <div class="card-footer">${formatShort(fruit.price)}</div>
                     `;
                     if (animatedSlot.side === side && animatedSlot.index === i) slotDiv.classList.add('animate-pop-in');
@@ -835,7 +967,6 @@
             renderTabs();
             initCalc();
             
-            // REVISI BUG: Mengecek halaman terakhir yang dibuka oleh user sebelum refresh
             let savedView = localStorage.getItem('bloxAppView') || 'stock';
             switchView(savedView); 
         };
