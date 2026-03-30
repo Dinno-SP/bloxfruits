@@ -146,11 +146,13 @@
         /* =========================================
            GAYA KHUSUS: INVENTORY STOCK
            ========================================= */
-        #view-stock { padding-bottom: 40px; }
+        #view-stock { padding-bottom: 40px; overflow-x: hidden; }
+        
         .stock-header {
             background-color: rgba(15, 23, 42, 0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            padding: 10px; text-align: center; position: sticky; top: 50px; z-index: 999;
+            padding: 10px; text-align: center; position: fixed; top: 50px; left: 0; width: 100%; z-index: 999;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
         }
         
         .stock-tabs { display: flex; overflow-x: auto; gap: 8px; padding-bottom: 10px; }
@@ -166,49 +168,47 @@
         .cat-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
         .cat-btn:hover:not(.active) { color: #fff; }
 
-        .stock-container { padding: 15px 12px; max-width: 800px; margin: 0 auto; }
+        .stock-container { padding: 130px 12px 15px 12px; max-width: 800px; margin: 0 auto; box-sizing: border-box; }
 
-        /* REVISI: Header Satu Baris Lurus, Tidak Boleh Melempar ke Bawah (No-Wrap) */
         .account-header {
             background-color: var(--panel-bg); padding: 12px 14px; border-radius: 12px; margin-bottom: 20px; 
             display: flex; justify-content: space-between; align-items: center;
             border: 1px solid rgba(255,255,255,0.05); position: relative; 
-            flex-wrap: nowrap; overflow-x: auto; gap: 8px; white-space: nowrap;
+            flex-wrap: nowrap; overflow-x: auto; gap: 8px; white-space: nowrap; width: 100%; box-sizing: border-box;
         }
         .account-header::-webkit-scrollbar { display: none; }
         .account-header::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(to bottom, #f59e0b, #ea580c); }
         
         .account-title-wrapper { display: flex; flex-direction: row; align-items: center; flex-shrink: 0; }
         
-        .storage-info { margin: 0; color: #fff; font-size: 16px; font-weight: 800; display:flex; align-items:center; gap:5px; }
+        .storage-info { margin: 0; font-size: 15px; font-weight: 900; color: #fff; display:flex; align-items:center; gap:5px; }
         
         .btn-storage-edit { background: rgba(255,255,255,0.15); border:none; color: white; border-radius: 4px; width: 22px; height: 22px; font-weight: bold; cursor: pointer; display: flex; justify-content:center; align-items:center;}
         .btn-storage-edit:active { transform: scale(0.85); background: var(--accent); }
         
-        .btn-reset-slot { background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #ef4444; border-radius: 6px; height: 26px; width: 26px; cursor: pointer; display: flex; justify-content:center; align-items:center; transition: 0.2s;}
-        .btn-reset-slot:active { transform: rotate(-45deg) scale(0.9); }
-
-        /* REVISI: Kontrol berderet Horizontal dengan jarak ketat */
-        .controls-wrapper { display: flex; flex-direction: row; align-items: center; gap: 6px; flex-shrink: 0; }
+        .controls-wrapper { display: flex; flex-direction: row; align-items: center; gap: 5px; flex-shrink: 0; justify-content: flex-end;}
         
         .btn-edit-mode {
             background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 800;
-            cursor: pointer; transition: 0.2s; font-family: 'Poppins', sans-serif; display: flex; align-items: center; justify-content: center;
+            color: #fff; padding: 0 8px; height: 28px; border-radius: 4px; font-size: 12px; font-weight: 800;
+            cursor: pointer; transition: 0.2s; font-family: 'Poppins', sans-serif; display: flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap;
         }
-        /* Style untuk tombol icon kotak ✅ ❌ */
-        .btn-edit-mode.icon-only {
-            width: 28px; height: 28px; padding: 0; border-radius: 6px; font-size: 12px;
-        }
-
         .btn-edit-mode.active { background-color: var(--btn-plus); border-color: var(--btn-plus); color: white; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4); }
         .btn-edit-mode.cancel { background-color: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: #ef4444; }
         .btn-edit-mode.cancel:active { background-color: #ef4444; color: white; }
         .btn-edit-mode:active { transform: scale(0.95); }
 
-        .slot-tracker { display: flex; align-items: center; gap: 6px; background-color: rgba(0,0,0,0.3); padding: 4px 8px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
-        .slot-count { font-size: 13px; font-weight: 800; width: 28px; text-align: center; color: #fff;}
-        .btn-slot { width: 26px; height: 26px; border-radius: 50%; border: none; color: white; font-size: 16px; font-weight: 800; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.1s; }
+        .btn-reset-slot { 
+            background: rgba(68, 213, 239, 0.2); border: 1px solid rgba(68, 219, 239, 0.4); 
+            color: #ffffff; border-radius: 4px; padding: 0 8px; height: 28px; 
+            font-size: 12px; font-weight: 800; cursor: pointer; display: flex; 
+            justify-content:center; align-items:center; transition: 0.2s; font-family: 'Poppins', sans-serif; white-space: nowrap;
+        }
+        .btn-reset-slot:active { transform: scale(0.95); }
+
+        .slot-tracker { display: flex; align-items: center; gap: 4px; background-color: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); height: 28px; box-sizing: border-box;}
+        .slot-count { font-size: 13px; font-weight: 800; width: 24px; text-align: center; color: #fff;}
+        .btn-slot { width: 22px; height: 22px; border-radius: 50%; border: none; color: white; font-size: 16px; font-weight: 800; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.1s; }
         .btn-slot:active { transform: scale(0.85); }
         .btn-slot-minus { background-color: var(--btn-minus); }
         .btn-slot-plus { background-color: var(--btn-plus); }
@@ -259,16 +259,15 @@
         .btn-stock.btn-plus { background-color: var(--btn-plus); }
         .stock-count { font-size: 14px; font-weight: 800; width: 22px; text-align: center; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.8);}
 
-        /* Animasi Merah Cepat dan Langsung Normal */
-        @keyframes stockChangeAnim {
-            0% { transform: scale(1); color: inherit; text-shadow: none; }
-            20% { transform: scale(1.4); color: #ef4444; text-shadow: 0 0 10px rgba(239,68,68,0.8); }
-            80% { transform: scale(1.4); color: #ef4444; text-shadow: 0 0 10px rgba(239,68,68,0.8); }
-            100% { transform: scale(1); color: inherit; text-shadow: none; }
+        /* REVISI WARNA MERAH: Tetap merah sampai ditekan selesai/batal */
+        .stock-modified { color: #ef4444 !important; text-shadow: 0 0 10px rgba(239,68,68,0.8) !important; }
+        
+        @keyframes stockPopAnim {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.4); }
+            100% { transform: scale(1); }
         }
-        .stock-changed {
-            animation: stockChangeAnim 0.25s ease-out !important;
-        }
+        .stock-pop { animation: stockPopAnim 0.25s ease-out !important; }
 
         #view-stock .reset-btn { display: block; width: 100%; padding: 14px; margin-top: 40px; background-color: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; font-size: 13px; font-weight: 800; cursor: pointer; transition: 0.2s; font-family: 'Poppins'; }
         #view-stock .reset-btn:active { background-color: #ef4444; color: white; transform: scale(0.98); }
@@ -277,6 +276,16 @@
         @keyframes fadeSlide { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
         .animate-content { animation: fadeSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 
+        @keyframes swipeLeftAnim {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes swipeRightAnim {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .anim-swipe-left { animation: swipeLeftAnim 0.25s cubic-bezier(0.25, 1, 0.5, 1) forwards !important; }
+        .anim-swipe-right { animation: swipeRightAnim 0.25s cubic-bezier(0.25, 1, 0.5, 1) forwards !important; }
 
         /* =========================================
            GAYA KHUSUS: CALCULATOR
@@ -345,7 +354,7 @@
         .modal-body { padding: 15px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; align-items: start; }
 
         /* =========================================
-           RESPONSIF MOBILE (Penyesuaian Ekstra Rapat)
+           RESPONSIF MOBILE
            ========================================= */
         @media screen and (max-width: 768px) {
             body.calc-mode { overflow: hidden; height: 100vh; position: fixed; width: 100%; }
@@ -396,17 +405,18 @@
             .modal-body { grid-template-columns: repeat(auto-fill, minmax(65px, 1fr)); gap: 6px; padding: 8px; }
             .modal-body .slot { height: 95px; }
 
-            /* REVISI: Header sangat rapat untuk mobile agar tidak turun (wrap) */
-            .account-header { padding: 8px 10px; gap: 4px; }
-            .storage-info { font-size: 14px; }
-            .controls-wrapper { gap: 4px; }
-            .btn-edit-mode { padding: 4px 10px; font-size: 11px; height: 26px; }
-            .btn-edit-mode.icon-only { width: 26px; height: 26px; padding: 0; }
-            .btn-reset-slot { width: 26px; height: 26px; }
-            .slot-tracker { padding: 4px 6px; gap: 4px; }
-            .slot-count { width: 22px; font-size: 12px; }
-            .btn-slot { width: 24px; height: 24px; font-size: 14px; }
-            .btn-storage-edit { width: 20px; height: 20px; font-size: 12px; }
+            .account-header { padding: 8px 10px; padding-left: 12px; gap: 3px; }
+            .storage-info { font-size: 13px; gap: 3px; }
+            .btn-storage-edit { width: 18px; height: 18px; font-size: 12px; }
+
+            .controls-wrapper { gap: 3px; }
+
+            .btn-edit-mode { padding: 0 5px; font-size: 10.5px; height: 26px; border-radius: 4px;}
+            .btn-reset-slot { padding: 0 5px; font-size: 10.5px; height: 26px; border-radius: 4px;}
+
+            .slot-tracker { padding: 2px 4px; gap: 3px; height: 26px; }
+            .slot-count { width: 18px; font-size: 11px; }
+            .btn-slot { width: 20px; height: 20px; font-size: 14px; }
         }
     </style>
 </head>
@@ -587,8 +597,9 @@
             "Clone_4": { storage: 4, slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) }
         };
 
-        let currentAccount = localStorage.getItem('bloxCurrentTab_v12') || "Royal_D";
-        let currentCategory = localStorage.getItem('bloxCurrentCat_v12') || "fruits";
+        // TETAP V18 (Tidak Wipe Data!)
+        let currentAccount = localStorage.getItem('bloxCurrentTab_v18') || "Royal_D";
+        let currentCategory = localStorage.getItem('bloxCurrentCat_v18') || "fruits";
         let isEditMode = false;
         let backupData = null; 
         let lastUpdated = { index: -1, cat: '', time: 0 }; 
@@ -620,7 +631,7 @@
                 document.body.classList.remove('calc-mode');
                 menuStock.classList.add('active'); menuCalc.classList.remove('active');
                 title.innerText = "STOCK";
-                renderContent(true);
+                renderContent('fade');
             } else {
                 stockView.style.display = 'none';
                 calcView.style.display = 'flex';
@@ -648,7 +659,7 @@
                 stockView.classList.remove('mode-edit');
                 stockView.classList.add('mode-view');
             }
-            renderContent(false); 
+            renderContent('none'); 
         }
 
         function cancelEditMode() {
@@ -661,16 +672,16 @@
             const stockView = document.getElementById('view-stock');
             stockView.classList.remove('mode-edit');
             stockView.classList.add('mode-view');
-            renderContent(false);
+            renderContent('none');
         }
 
         function initData() {
-            const savedData = localStorage.getItem('bloxStockData_v12'); 
+            const savedData = localStorage.getItem('bloxStockData_v18'); 
             if (savedData) return JSON.parse(savedData);
             saveData(defaultData); return JSON.parse(JSON.stringify(defaultData));
         }
 
-        function saveData(data) { localStorage.setItem('bloxStockData_v12', JSON.stringify(data)); }
+        function saveData(data) { localStorage.setItem('bloxStockData_v18', JSON.stringify(data)); }
 
         function renderTabs() {
             let appData = initData();
@@ -683,12 +694,8 @@
                 btn.className = `tab-btn ${accName === currentAccount ? 'active' : ''}`;
                 btn.innerText = accName.replace('_', ' ');
                 btn.onclick = () => {
-                    isEditMode = false; backupData = null;
-                    document.getElementById('view-stock').classList.remove('mode-edit');
-                    document.getElementById('view-stock').classList.add('mode-view');
-                    
-                    currentAccount = accName; localStorage.setItem('bloxCurrentTab_v12', currentAccount);
-                    renderTabs(); renderContent(true); 
+                    currentAccount = accName; localStorage.setItem('bloxCurrentTab_v18', currentAccount);
+                    renderTabs(); renderContent('fade'); 
                 };
                 tabContainer.appendChild(btn);
             });
@@ -701,12 +708,8 @@
         }
 
         function changeCategory(cat) { 
-            isEditMode = false; backupData = null;
-            document.getElementById('view-stock').classList.remove('mode-edit');
-            document.getElementById('view-stock').classList.add('mode-view');
-            
-            currentCategory = cat; localStorage.setItem('bloxCurrentCat_v12', currentCategory); 
-            renderTabs(); renderContent(true); 
+            currentCategory = cat; localStorage.setItem('bloxCurrentCat_v18', currentCategory); 
+            renderTabs(); renderContent('fade'); 
         }
 
         function getRarityClass(itemName) {
@@ -726,27 +729,28 @@
                 });
             });
 
-            saveData(appData); renderContent(false);
+            saveData(appData); renderContent('none');
         };
 
         window.resetSlotCount = function() {
             let appData = initData();
             appData[currentAccount].slotCount = 0;
-            saveData(appData); renderContent(false);
+            saveData(appData); renderContent('none');
         };
 
-        function renderContent(triggerAnimation = false) {
+        function renderContent(animationType = 'none') {
             const currentWindowScroll = window.scrollY;
-            let appData = initData(); const acc = appData[currentAccount];
+            let appData = initData(); 
+            
+            if (!appData || !appData[currentAccount]) {
+                appData = JSON.parse(JSON.stringify(defaultData));
+                currentAccount = Object.keys(appData)[0];
+                localStorage.setItem('bloxCurrentTab_v18', currentAccount);
+            }
+            const acc = appData[currentAccount];
 
-            if (triggerAnimation) {
-                window.scrollTo(0, 0); 
-                const contentArea = document.getElementById('content-area');
-                if(contentArea) {
-                    contentArea.classList.remove('animate-content'); 
-                    void contentArea.offsetWidth; 
-                    contentArea.classList.add('animate-content');
-                }
+            if (animationType === 'fade' || animationType === 'swipe') {
+                window.scrollTo({ top: 0, behavior: 'instant' });
             }
 
             let storageText = isEditMode ?
@@ -754,14 +758,13 @@
                 `S: <span style="color:var(--accent);">${acc.storage}</span>`;
 
             let editControls = isEditMode ?
-                `<button id="btn-cancel-edit" class="btn-edit-mode cancel icon-only" onclick="cancelEditMode()">❌</button>
-                 <button id="btn-edit-mode" class="btn-edit-mode active icon-only" onclick="toggleEditMode()">✅</button>` :
+                `<button id="btn-cancel-edit" class="btn-edit-mode cancel" onclick="cancelEditMode()">Batal</button>
+                 <button id="btn-edit-mode" class="btn-edit-mode active" onclick="toggleEditMode()">Selesai</button>` :
                 `<button id="btn-edit-mode" class="btn-edit-mode" onclick="toggleEditMode()">✎ Edit</button>`;
 
             let slotResetBtn = isEditMode ?
-                `<button class="btn-reset-slot" onclick="resetSlotCount()" title="Reset Slot">🔄</button>` : '';
+                `<button class="btn-reset-slot" onclick="resetSlotCount()">Reset</button>` : '';
 
-            // REVISI 1, 2 & 3: Tombol Satu Baris (No-Wrap), Nama Akun Hilang
             document.getElementById('account-header').innerHTML = `
                 <div class="account-title-wrapper">
                     <div class="storage-info">${storageText}</div>
@@ -826,13 +829,22 @@
                 if (!isExcludedFromHighScore(itemData.name, rarity) && itemData.count > 0 && itemData.count === maxStocks[rarity]) {
                     isMax = true;
                 }
+
+                // Cek Item Mana yang Diedit
+                let modifiedClass = '';
+                if (isEditMode && backupData) {
+                    let origItem = backupData[currentAccount][currentCategory][index];
+                    if (origItem && origItem.count !== itemData.count) {
+                        modifiedClass = 'stock-modified';
+                    }
+                }
                 
                 let animClass = '';
                 if (lastUpdated.cat === currentCategory && lastUpdated.index === index && (Date.now() - lastUpdated.time < 300)) {
-                    animClass = 'stock-changed';
+                    animClass = 'stock-pop';
                 }
 
-                const stockCountClass = isMax ? `stock-count text-green-glow ${animClass}` : `stock-count ${animClass}`;
+                const stockCountClass = isMax ? `stock-count text-green-glow ${modifiedClass} ${animClass}` : `stock-count ${modifiedClass} ${animClass}`;
                 const zeroClass = itemData.count === 0 ? 'stock-zero' : '';
                 
                 const card = document.createElement('div');
@@ -861,20 +873,27 @@
 
             document.getElementById('selected-count').innerText = selectedCount; document.getElementById('unselected-count').innerText = unselectedCount;
 
-            if (!triggerAnimation) {
+            if (animationType === 'fade') {
+                const cArea = document.getElementById('content-area');
+                if(cArea) {
+                    cArea.classList.remove('animate-content', 'anim-swipe-left', 'anim-swipe-right'); 
+                    void cArea.offsetWidth; 
+                    cArea.classList.add('animate-content');
+                }
+            } else if (animationType === 'none') {
                 window.scrollTo(0, currentWindowScroll);
             }
         }
 
         window.toggleSelection = function(itemIndex) {
             let appData = initData(); appData[currentAccount][currentCategory][itemIndex].selected = !appData[currentAccount][currentCategory][itemIndex].selected;
-            saveData(appData); renderContent(false); 
+            saveData(appData); renderContent('none'); 
         };
 
         window.updateSlotCount = function(amount) {
             let appData = initData(); let count = appData[currentAccount].slotCount + amount;
             if (count < 0) count = 0; if (count > 5) count = 5;
-            appData[currentAccount].slotCount = count; saveData(appData); renderContent(false);
+            appData[currentAccount].slotCount = count; saveData(appData); renderContent('none');
         };
 
         window.updateStock = function(itemIndex, amount) {
@@ -889,7 +908,7 @@
             saveData(appData); 
             
             lastUpdated = { index: itemIndex, cat: currentCategory, time: Date.now() };
-            renderContent(false);
+            renderContent('none');
         };
 
         function resetCurrentAccount() {
@@ -899,7 +918,7 @@
                 if(currentCategory === 'fruits') appData[currentAccount].fruits = generateList(orderedFruits);
                 if(currentCategory === 'skins') appData[currentAccount].skins = generateList(orderedSkins);
                 if(currentCategory === 'gamepasses') appData[currentAccount].gamepasses = generateList(orderedGamepasses);
-                saveData(appData); renderContent(true);
+                saveData(appData); renderContent('fade');
             }
         }
 
@@ -1109,20 +1128,23 @@
                     let accounts = Object.keys(appData);
                     let currentIndex = accounts.indexOf(currentAccount);
 
-                    isEditMode = false;
-                    backupData = null;
-                    document.getElementById('view-stock').classList.remove('mode-edit');
-                    document.getElementById('view-stock').classList.add('mode-view');
-
+                    let animClass = '';
                     if (diffX < 0) {
                         currentAccount = accounts[(currentIndex + 1) % accounts.length];
+                        animClass = 'anim-swipe-left';
                     } else {
                         currentAccount = accounts[(currentIndex - 1 + accounts.length) % accounts.length];
+                        animClass = 'anim-swipe-right';
                     }
                     
-                    localStorage.setItem('bloxCurrentTab_v12', currentAccount);
+                    localStorage.setItem('bloxCurrentTab_v18', currentAccount);
                     renderTabs();
-                    renderContent(true);
+                    
+                    renderContent('swipe');
+                    const cArea = document.getElementById('content-area');
+                    cArea.classList.remove('animate-content', 'anim-swipe-left', 'anim-swipe-right');
+                    void cArea.offsetWidth;
+                    cArea.classList.add(animClass);
                 }
             }, {passive: true});
         };
