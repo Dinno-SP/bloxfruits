@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Stock BF</title>
+    <title>STOCK</title>
 
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
@@ -45,9 +45,6 @@
             overflow-x: hidden;
         }
 
-        /* =========================================
-           REVISI 3: NAVBAR DIPERKECIL (60px -> 50px)
-           ========================================= */
         .main-navbar {
             position: fixed; top: 0; left: 0; width: 100%; height: 50px;
             background-color: rgba(15, 23, 42, 0.95);
@@ -171,35 +168,45 @@
 
         .stock-container { padding: 15px 12px; max-width: 800px; margin: 0 auto; }
 
+        /* REVISI: Header Satu Baris Lurus, Tidak Boleh Melempar ke Bawah (No-Wrap) */
         .account-header {
-            background-color: var(--panel-bg); padding: 12px 16px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;
-            border: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden;
+            background-color: var(--panel-bg); padding: 12px 14px; border-radius: 12px; margin-bottom: 20px; 
+            display: flex; justify-content: space-between; align-items: center;
+            border: 1px solid rgba(255,255,255,0.05); position: relative; 
+            flex-wrap: nowrap; overflow-x: auto; gap: 8px; white-space: nowrap;
         }
+        .account-header::-webkit-scrollbar { display: none; }
         .account-header::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(to bottom, #f59e0b, #ea580c); }
         
-        .account-title-wrapper { display: flex; flex-direction: column; justify-content: center; }
-        .account-title h2 { margin: 0; font-size: 16px; font-weight: 800; color: #fff;}
+        .account-title-wrapper { display: flex; flex-direction: row; align-items: center; flex-shrink: 0; }
         
-        /* REVISI: Tombol Storage di Mode Edit */
-        .storage-info { margin: 2px 0 0 0; color: var(--text-muted); font-size: 11px; font-weight: 600; display:flex; align-items:center; gap:5px; }
-        .btn-storage-edit { background: rgba(255,255,255,0.15); border:none; color: white; border-radius: 4px; width: 20px; height: 20px; font-weight: bold; cursor: pointer; display: flex; justify-content:center; align-items:center;}
+        .storage-info { margin: 0; color: #fff; font-size: 16px; font-weight: 800; display:flex; align-items:center; gap:5px; }
+        
+        .btn-storage-edit { background: rgba(255,255,255,0.15); border:none; color: white; border-radius: 4px; width: 22px; height: 22px; font-weight: bold; cursor: pointer; display: flex; justify-content:center; align-items:center;}
         .btn-storage-edit:active { transform: scale(0.85); background: var(--accent); }
         
-        /* REVISI: Tombol Reset 0/5 di Mode Edit */
         .btn-reset-slot { background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #ef4444; border-radius: 6px; height: 26px; width: 26px; cursor: pointer; display: flex; justify-content:center; align-items:center; transition: 0.2s;}
         .btn-reset-slot:active { transform: rotate(-45deg) scale(0.9); }
 
-        .controls-wrapper { display: flex; align-items: center; gap: 12px; }
+        /* REVISI: Kontrol berderet Horizontal dengan jarak ketat */
+        .controls-wrapper { display: flex; flex-direction: row; align-items: center; gap: 6px; flex-shrink: 0; }
+        
         .btn-edit-mode {
             background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
             color: #fff; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 800;
-            cursor: pointer; transition: 0.2s; font-family: 'Poppins', sans-serif;
+            cursor: pointer; transition: 0.2s; font-family: 'Poppins', sans-serif; display: flex; align-items: center; justify-content: center;
         }
+        /* Style untuk tombol icon kotak ✅ ❌ */
+        .btn-edit-mode.icon-only {
+            width: 28px; height: 28px; padding: 0; border-radius: 6px; font-size: 12px;
+        }
+
         .btn-edit-mode.active { background-color: var(--btn-plus); border-color: var(--btn-plus); color: white; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4); }
+        .btn-edit-mode.cancel { background-color: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: #ef4444; }
+        .btn-edit-mode.cancel:active { background-color: #ef4444; color: white; }
         .btn-edit-mode:active { transform: scale(0.95); }
 
-        .slot-tracker-wrapper { display: flex; align-items: center; gap: 5px; }
-        .slot-tracker { display: flex; align-items: center; gap: 8px; background-color: rgba(0,0,0,0.3); padding: 6px 10px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .slot-tracker { display: flex; align-items: center; gap: 6px; background-color: rgba(0,0,0,0.3); padding: 4px 8px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
         .slot-count { font-size: 13px; font-weight: 800; width: 28px; text-align: center; color: #fff;}
         .btn-slot { width: 26px; height: 26px; border-radius: 50%; border: none; color: white; font-size: 16px; font-weight: 800; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.1s; }
         .btn-slot:active { transform: scale(0.85); }
@@ -252,6 +259,17 @@
         .btn-stock.btn-plus { background-color: var(--btn-plus); }
         .stock-count { font-size: 14px; font-weight: 800; width: 22px; text-align: center; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.8);}
 
+        /* Animasi Merah Cepat dan Langsung Normal */
+        @keyframes stockChangeAnim {
+            0% { transform: scale(1); color: inherit; text-shadow: none; }
+            20% { transform: scale(1.4); color: #ef4444; text-shadow: 0 0 10px rgba(239,68,68,0.8); }
+            80% { transform: scale(1.4); color: #ef4444; text-shadow: 0 0 10px rgba(239,68,68,0.8); }
+            100% { transform: scale(1); color: inherit; text-shadow: none; }
+        }
+        .stock-changed {
+            animation: stockChangeAnim 0.25s ease-out !important;
+        }
+
         #view-stock .reset-btn { display: block; width: 100%; padding: 14px; margin-top: 40px; background-color: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; font-size: 13px; font-weight: 800; cursor: pointer; transition: 0.2s; font-family: 'Poppins'; }
         #view-stock .reset-btn:active { background-color: #ef4444; color: white; transform: scale(0.98); }
         .mode-view #reset-btn { display: none; }
@@ -299,7 +317,6 @@
             transform: scale(1.15);
         }
 
-        /* REVISI 5: Animasi Super Cepat di Kalkulator */
         @keyframes popIn { 0% { opacity: 0; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
         .animate-pop-in { animation: popIn 0.05s ease-out forwards; }
         @keyframes popOut { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.8); } }
@@ -328,19 +345,15 @@
         .modal-body { padding: 15px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; align-items: start; }
 
         /* =========================================
-           RESPONSIF MOBILE
+           RESPONSIF MOBILE (Penyesuaian Ekstra Rapat)
            ========================================= */
         @media screen and (max-width: 768px) {
             body.calc-mode { overflow: hidden; height: 100vh; position: fixed; width: 100%; }
             
             #view-calculator { 
                 height: calc(100vh - 50px); 
-                display: flex; 
-                flex-direction: column; 
-                padding: 10px 5px; 
-                box-sizing: border-box;
-                align-items: center;
-                justify-content: flex-start;
+                display: flex; flex-direction: column; padding: 10px 5px; 
+                box-sizing: border-box; align-items: center; justify-content: flex-start;
             }
             
             .calculator-container { padding: 0; height: 100%; width: 100%; display: flex; flex-direction: column; }
@@ -382,8 +395,18 @@
             .modal-header h3 { font-size: 13px; }
             .modal-body { grid-template-columns: repeat(auto-fill, minmax(65px, 1fr)); gap: 6px; padding: 8px; }
             .modal-body .slot { height: 95px; }
-            
-            .btn-edit-mode { padding: 4px 10px; font-size: 11px; }
+
+            /* REVISI: Header sangat rapat untuk mobile agar tidak turun (wrap) */
+            .account-header { padding: 8px 10px; gap: 4px; }
+            .storage-info { font-size: 14px; }
+            .controls-wrapper { gap: 4px; }
+            .btn-edit-mode { padding: 4px 10px; font-size: 11px; height: 26px; }
+            .btn-edit-mode.icon-only { width: 26px; height: 26px; padding: 0; }
+            .btn-reset-slot { width: 26px; height: 26px; }
+            .slot-tracker { padding: 4px 6px; gap: 4px; }
+            .slot-count { width: 22px; font-size: 12px; }
+            .btn-slot { width: 24px; height: 24px; font-size: 14px; }
+            .btn-storage-edit { width: 20px; height: 20px; font-size: 12px; }
         }
     </style>
 </head>
@@ -391,7 +414,7 @@
 
     <nav class="main-navbar">
         <button class="hamburger-btn" onclick="toggleSidebar(true)">☰</button>
-        <h1 class="app-title" id="app-title">Stock BF</h1>
+        <h1 class="app-title" id="app-title">STOCK</h1>
     </nav>
 
     <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar(false)"></div>
@@ -557,7 +580,6 @@
         const masterDict = [...orderedFruits, ...orderedSkins, ...orderedGamepasses];
         const generateList = (sourceArray) => sourceArray.map(f => ({ name: f.name, count: 0, selected: true }));
 
-        // REVISI 6: Menggunakan struktur data Storage dinamis V12
         const defaultData = {
             "Royal_D": { storage: 16, slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) },
             "Clone_2": { storage: 8, slotCount: 0, fruits: generateList(orderedFruits), skins: generateList(orderedSkins), gamepasses: generateList(orderedGamepasses) },
@@ -568,6 +590,8 @@
         let currentAccount = localStorage.getItem('bloxCurrentTab_v12') || "Royal_D";
         let currentCategory = localStorage.getItem('bloxCurrentCat_v12') || "fruits";
         let isEditMode = false;
+        let backupData = null; 
+        let lastUpdated = { index: -1, cat: '', time: 0 }; 
 
         function toggleSidebar(forceOpen) {
             const sidebar = document.getElementById('sidebar');
@@ -595,35 +619,49 @@
                 calcView.style.display = 'none';
                 document.body.classList.remove('calc-mode');
                 menuStock.classList.add('active'); menuCalc.classList.remove('active');
-                title.innerText = "Stock BF";
+                title.innerText = "STOCK";
                 renderContent(true);
             } else {
                 stockView.style.display = 'none';
                 calcView.style.display = 'flex';
                 document.body.classList.add('calc-mode');
                 menuStock.classList.remove('active'); menuCalc.classList.add('active');
-                title.innerText = "Calculator";
+                title.innerText = "CALCULATOR";
             }
             toggleSidebar(false);
         }
 
         function toggleEditMode() {
-            isEditMode = !isEditMode;
-            const stockView = document.getElementById('view-stock');
-            const editBtn = document.getElementById('btn-edit-mode');
+            if (!isEditMode) {
+                backupData = JSON.parse(JSON.stringify(initData())); 
+                isEditMode = true;
+            } else {
+                isEditMode = false; 
+                backupData = null;
+            }
             
+            const stockView = document.getElementById('view-stock');
             if (isEditMode) {
                 stockView.classList.remove('mode-view');
                 stockView.classList.add('mode-edit');
-                editBtn.classList.add('active');
-                editBtn.innerText = "✅ Selesai";
             } else {
                 stockView.classList.remove('mode-edit');
                 stockView.classList.add('mode-view');
-                editBtn.classList.remove('active');
-                editBtn.innerText = "✎ Mode Edit";
             }
-            renderContent(false); // Refresh untuk memunculkan tombol Reset & Storage
+            renderContent(false); 
+        }
+
+        function cancelEditMode() {
+            if (backupData) {
+                saveData(backupData); 
+            }
+            isEditMode = false;
+            backupData = null;
+            
+            const stockView = document.getElementById('view-stock');
+            stockView.classList.remove('mode-edit');
+            stockView.classList.add('mode-view');
+            renderContent(false);
         }
 
         function initData() {
@@ -645,6 +683,10 @@
                 btn.className = `tab-btn ${accName === currentAccount ? 'active' : ''}`;
                 btn.innerText = accName.replace('_', ' ');
                 btn.onclick = () => {
+                    isEditMode = false; backupData = null;
+                    document.getElementById('view-stock').classList.remove('mode-edit');
+                    document.getElementById('view-stock').classList.add('mode-view');
+                    
                     currentAccount = accName; localStorage.setItem('bloxCurrentTab_v12', currentAccount);
                     renderTabs(); renderContent(true); 
                 };
@@ -658,21 +700,26 @@
             });
         }
 
-        function changeCategory(cat) { currentCategory = cat; localStorage.setItem('bloxCurrentCat_v12', currentCategory); renderTabs(); renderContent(true); }
+        function changeCategory(cat) { 
+            isEditMode = false; backupData = null;
+            document.getElementById('view-stock').classList.remove('mode-edit');
+            document.getElementById('view-stock').classList.add('mode-view');
+            
+            currentCategory = cat; localStorage.setItem('bloxCurrentCat_v12', currentCategory); 
+            renderTabs(); renderContent(true); 
+        }
 
         function getRarityClass(itemName) {
             const item = masterDict.find(f => f.name === itemName);
             return item ? `rarity-${item.rarity}` : 'rarity-common';
         }
 
-        // FUNGSI BARU: Update Batas Storage
         window.updateStorageLimit = function(amount) {
             let appData = initData();
             let newLimit = appData[currentAccount].storage + amount;
             if (newLimit < 1) newLimit = 1;
             appData[currentAccount].storage = newLimit;
 
-            // Jika storage dikecilkan, potong otomatis stok yang melewati batas
             ['fruits', 'skins', 'gamepasses'].forEach(cat => {
                 appData[currentAccount][cat].forEach(item => {
                     if (item.count > newLimit) item.count = newLimit;
@@ -682,7 +729,6 @@
             saveData(appData); renderContent(false);
         };
 
-        // FUNGSI BARU: Reset Slot ke 0
         window.resetSlotCount = function() {
             let appData = initData();
             appData[currentAccount].slotCount = 0;
@@ -703,34 +749,30 @@
                 }
             }
 
-            let editBtnText = isEditMode ? "✅ Selesai" : "✎ Mode Edit";
-            let editBtnClass = isEditMode ? "btn-edit-mode active" : "btn-edit-mode";
-
-            // Tombol edit Storage hanya muncul saat Mode Edit
             let storageText = isEditMode ?
-                `Storage: <button class="btn-storage-edit" onclick="updateStorageLimit(-1)">-</button> <span style="color:#fff;font-weight:800;">${acc.storage}</span> <button class="btn-storage-edit" onclick="updateStorageLimit(1)">+</button>` :
-                `Storage: ${acc.storage}`;
+                `S: <button class="btn-storage-edit" onclick="updateStorageLimit(-1)">-</button> <span style="color:var(--accent);">${acc.storage}</span> <button class="btn-storage-edit" onclick="updateStorageLimit(1)">+</button>` :
+                `S: <span style="color:var(--accent);">${acc.storage}</span>`;
 
-            // Tombol Reset Slot hanya muncul saat Mode Edit
+            let editControls = isEditMode ?
+                `<button id="btn-cancel-edit" class="btn-edit-mode cancel icon-only" onclick="cancelEditMode()">❌</button>
+                 <button id="btn-edit-mode" class="btn-edit-mode active icon-only" onclick="toggleEditMode()">✅</button>` :
+                `<button id="btn-edit-mode" class="btn-edit-mode" onclick="toggleEditMode()">✎ Edit</button>`;
+
             let slotResetBtn = isEditMode ?
                 `<button class="btn-reset-slot" onclick="resetSlotCount()" title="Reset Slot">🔄</button>` : '';
 
+            // REVISI 1, 2 & 3: Tombol Satu Baris (No-Wrap), Nama Akun Hilang
             document.getElementById('account-header').innerHTML = `
                 <div class="account-title-wrapper">
-                    <div class="account-title">
-                        <h2>${currentAccount.replace('_', ' ')} <span style="font-size:12px; color:var(--accent);">(${currentCategory.toUpperCase()})</span></h2>
-                        <div class="storage-info">${storageText}</div>
-                    </div>
+                    <div class="storage-info">${storageText}</div>
                 </div>
                 <div class="controls-wrapper">
-                    <button id="btn-edit-mode" class="${editBtnClass}" onclick="toggleEditMode()">${editBtnText}</button>
-                    <div class="slot-tracker-wrapper">
-                        ${slotResetBtn}
-                        <div class="slot-tracker">
-                            <button class="btn-slot btn-slot-minus" onclick="updateSlotCount(-1)">-</button>
-                            <div class="slot-count">${acc.slotCount}/5</div>
-                            <button class="btn-slot btn-slot-plus" onclick="updateSlotCount(1)">+</button>
-                        </div>
+                    ${editControls}
+                    ${slotResetBtn}
+                    <div class="slot-tracker">
+                        <button class="btn-slot btn-slot-minus" onclick="updateSlotCount(-1)">-</button>
+                        <div class="slot-count">${acc.slotCount}/5</div>
+                        <button class="btn-slot btn-slot-plus" onclick="updateSlotCount(1)">+</button>
                     </div>
                 </div>
             `;
@@ -784,7 +826,13 @@
                 if (!isExcludedFromHighScore(itemData.name, rarity) && itemData.count > 0 && itemData.count === maxStocks[rarity]) {
                     isMax = true;
                 }
-                const stockCountClass = isMax ? 'stock-count text-green-glow' : 'stock-count';
+                
+                let animClass = '';
+                if (lastUpdated.cat === currentCategory && lastUpdated.index === index && (Date.now() - lastUpdated.time < 300)) {
+                    animClass = 'stock-changed';
+                }
+
+                const stockCountClass = isMax ? `stock-count text-green-glow ${animClass}` : `stock-count ${animClass}`;
                 const zeroClass = itemData.count === 0 ? 'stock-zero' : '';
                 
                 const card = document.createElement('div');
@@ -831,7 +879,6 @@
 
         window.updateStock = function(itemIndex, amount) {
             let appData = initData(); 
-            // REVISI: Pembatasan maksimal limit sesuai Storage akun
             let maxStorage = appData[currentAccount].storage || 1;
             let count = appData[currentAccount][currentCategory][itemIndex].count + amount;
             
@@ -839,13 +886,15 @@
             if (count > maxStorage) count = maxStorage; 
             
             appData[currentAccount][currentCategory][itemIndex].count = count;
-            saveData(appData); renderContent(false);
+            saveData(appData); 
+            
+            lastUpdated = { index: itemIndex, cat: currentCategory, time: Date.now() };
+            renderContent(false);
         };
 
         function resetCurrentAccount() {
-            const displayAccName = currentAccount.replace('_', ' ');
             const catDisplay = currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1);
-            if(confirm(`Yakin ingin mereset data [ ${catDisplay} ] khusus untuk akun [ ${displayAccName} ] menjadi 0?\nSemua item di kategori ini akan kembali ke Tabel Pilihan.`)) {
+            if(confirm(`Yakin ingin mereset semua ${catDisplay} di tab ini menjadi 0?`)) {
                 let appData = initData();
                 if(currentCategory === 'fruits') appData[currentAccount].fruits = generateList(orderedFruits);
                 if(currentCategory === 'skins') appData[currentAccount].skins = generateList(orderedSkins);
@@ -950,13 +999,11 @@
         
         function closeModalOnOutsideClick(e) { if(e.target.id === 'modal') closeModal(); }
 
-        // REVISI: Pergerakan animasi Instan/Tanpa Timeout berlebihan
         function selectFruitWithAnim(fruit, element) {
             if (element.classList.contains('animate-pop-out')) return; 
             if (calcState[calcCurrentActiveSide].length < 4) {
                 element.classList.add('animate-pop-out');
                 
-                // Eksekusi langsung tanpa jeda untuk responsivitas maksimal
                 calcState[calcCurrentActiveSide].push(fruit); 
                 animatedSlot = { side: calcCurrentActiveSide, index: calcState[calcCurrentActiveSide].length - 1 };
                 
@@ -971,7 +1018,6 @@
         function removeFruitWithAnim(side, fruitObj, element) {
             element.classList.remove('animate-pop-in'); element.classList.add('animate-pop-out');
             
-            // Eksekusi langsung tanpa delay panjang
             setTimeout(() => {
                 const idx = calcState[side].indexOf(fruitObj);
                 if (idx > -1) { calcState[side].splice(idx, 1); updateCalcUI(); }
@@ -1033,12 +1079,52 @@
             }
         }
 
+        // =========================================
+        // JALANKAN SAAT WEB DIMUAT
+        // =========================================
         window.onload = function() {
             renderTabs();
             initCalc();
             
             let savedView = localStorage.getItem('bloxAppView') || 'stock';
             switchView(savedView); 
+            
+            let touchstartX = 0;
+            let touchstartY = 0;
+            const contentArea = document.getElementById('view-stock');
+            
+            contentArea.addEventListener('touchstart', e => {
+                touchstartX = e.changedTouches[0].screenX;
+                touchstartY = e.changedTouches[0].screenY;
+            }, {passive: true});
+
+            contentArea.addEventListener('touchend', e => {
+                let touchendX = e.changedTouches[0].screenX;
+                let touchendY = e.changedTouches[0].screenY;
+                let diffX = touchendX - touchstartX;
+                let diffY = touchendY - touchstartY;
+                
+                if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY) * 1.5) {
+                    let appData = initData();
+                    let accounts = Object.keys(appData);
+                    let currentIndex = accounts.indexOf(currentAccount);
+
+                    isEditMode = false;
+                    backupData = null;
+                    document.getElementById('view-stock').classList.remove('mode-edit');
+                    document.getElementById('view-stock').classList.add('mode-view');
+
+                    if (diffX < 0) {
+                        currentAccount = accounts[(currentIndex + 1) % accounts.length];
+                    } else {
+                        currentAccount = accounts[(currentIndex - 1 + accounts.length) % accounts.length];
+                    }
+                    
+                    localStorage.setItem('bloxCurrentTab_v12', currentAccount);
+                    renderTabs();
+                    renderContent(true);
+                }
+            }, {passive: true});
         };
 
         if ('serviceWorker' in navigator) {
